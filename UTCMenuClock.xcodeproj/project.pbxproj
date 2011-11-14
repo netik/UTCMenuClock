@@ -1,0 +1,450 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A8B1188B1471AE3A008A993B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B1188A1471AE3A008A993B /* Cocoa.framework */; };
+		A8B118951471AE3A008A993B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8B118931471AE3A008A993B /* InfoPlist.strings */; };
+		A8B118971471AE3A008A993B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B118961471AE3A008A993B /* main.m */; };
+		A8B1189B1471AE3A008A993B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A8B118991471AE3A008A993B /* Credits.rtf */; };
+		A8B1189E1471AE3A008A993B /* UTCMenuClockAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B1189D1471AE3A008A993B /* UTCMenuClockAppDelegate.m */; };
+		A8B118A11471AE3A008A993B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8B1189F1471AE3A008A993B /* MainMenu.xib */; };
+		A8B118A91471AE3A008A993B /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B118A81471AE3A008A993B /* SenTestingKit.framework */; };
+		A8B118AA1471AE3A008A993B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B1188A1471AE3A008A993B /* Cocoa.framework */; };
+		A8B118B21471AE3A008A993B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8B118B01471AE3A008A993B /* InfoPlist.strings */; };
+		A8B118B41471AE3A008A993B /* UTCMenuClockTests.h in Resources */ = {isa = PBXBuildFile; fileRef = A8B118B31471AE3A008A993B /* UTCMenuClockTests.h */; };
+		A8B118B61471AE3A008A993B /* UTCMenuClockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B118B51471AE3A008A993B /* UTCMenuClockTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A8B118AB1471AE3A008A993B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A8B1187D1471AE3A008A993B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A8B118851471AE3A008A993B;
+			remoteInfo = UTCMenuClock;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A8B118861471AE3A008A993B /* UTCMenuClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UTCMenuClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8B1188A1471AE3A008A993B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A8B1188D1471AE3A008A993B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		A8B1188E1471AE3A008A993B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A8B1188F1471AE3A008A993B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A8B118921471AE3A008A993B /* UTCMenuClock-Info.plist */ = {isa = PBXFileReference; path = "UTCMenuClock-Info.plist"; sourceTree = "<group>"; };
+		A8B118941471AE3A008A993B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A8B118961471AE3A008A993B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A8B118981471AE3A008A993B /* UTCMenuClock-Prefix.pch */ = {isa = PBXFileReference; path = "UTCMenuClock-Prefix.pch"; sourceTree = "<group>"; };
+		A8B1189A1471AE3A008A993B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A8B1189C1471AE3A008A993B /* UTCMenuClockAppDelegate.h */ = {isa = PBXFileReference; path = UTCMenuClockAppDelegate.h; sourceTree = "<group>"; };
+		A8B1189D1471AE3A008A993B /* UTCMenuClockAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTCMenuClockAppDelegate.m; sourceTree = "<group>"; };
+		A8B118A01471AE3A008A993B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A8B118A71471AE3A008A993B /* UTCMenuClockTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UTCMenuClockTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8B118A81471AE3A008A993B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		A8B118AF1471AE3A008A993B /* UTCMenuClockTests-Info.plist */ = {isa = PBXFileReference; path = "UTCMenuClockTests-Info.plist"; sourceTree = "<group>"; };
+		A8B118B11471AE3A008A993B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A8B118B31471AE3A008A993B /* UTCMenuClockTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UTCMenuClockTests.h; sourceTree = "<group>"; };
+		A8B118B51471AE3A008A993B /* UTCMenuClockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTCMenuClockTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A8B118831471AE3A008A993B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8B1188B1471AE3A008A993B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8B118A31471AE3A008A993B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8B118A91471AE3A008A993B /* SenTestingKit.framework in Frameworks */,
+				A8B118AA1471AE3A008A993B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A8B1187B1471AE3A008A993B = {
+			isa = PBXGroup;
+			children = (
+				A8B118901471AE3A008A993B /* UTCMenuClock */,
+				A8B118AD1471AE3A008A993B /* UTCMenuClockTests */,
+				A8B118891471AE3A008A993B /* Frameworks */,
+				A8B118871471AE3A008A993B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A8B118871471AE3A008A993B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A8B118861471AE3A008A993B /* UTCMenuClock.app */,
+				A8B118A71471AE3A008A993B /* UTCMenuClockTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A8B118891471AE3A008A993B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A8B1188A1471AE3A008A993B /* Cocoa.framework */,
+				A8B118A81471AE3A008A993B /* SenTestingKit.framework */,
+				A8B1188C1471AE3A008A993B /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A8B1188C1471AE3A008A993B /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A8B1188D1471AE3A008A993B /* AppKit.framework */,
+				A8B1188E1471AE3A008A993B /* CoreData.framework */,
+				A8B1188F1471AE3A008A993B /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		A8B118901471AE3A008A993B /* UTCMenuClock */ = {
+			isa = PBXGroup;
+			children = (
+				A8B1189C1471AE3A008A993B /* UTCMenuClockAppDelegate.h */,
+				A8B1189D1471AE3A008A993B /* UTCMenuClockAppDelegate.m */,
+				A8B1189F1471AE3A008A993B /* MainMenu.xib */,
+				A8B118911471AE3A008A993B /* Supporting Files */,
+			);
+			path = UTCMenuClock;
+			sourceTree = "<group>";
+		};
+		A8B118911471AE3A008A993B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A8B118921471AE3A008A993B /* UTCMenuClock-Info.plist */,
+				A8B118931471AE3A008A993B /* InfoPlist.strings */,
+				A8B118961471AE3A008A993B /* main.m */,
+				A8B118981471AE3A008A993B /* UTCMenuClock-Prefix.pch */,
+				A8B118991471AE3A008A993B /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A8B118AD1471AE3A008A993B /* UTCMenuClockTests */ = {
+			isa = PBXGroup;
+			children = (
+				A8B118B31471AE3A008A993B /* UTCMenuClockTests.h */,
+				A8B118B51471AE3A008A993B /* UTCMenuClockTests.m */,
+				A8B118AE1471AE3A008A993B /* Supporting Files */,
+			);
+			path = UTCMenuClockTests;
+			sourceTree = "<group>";
+		};
+		A8B118AE1471AE3A008A993B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A8B118AF1471AE3A008A993B /* UTCMenuClockTests-Info.plist */,
+				A8B118B01471AE3A008A993B /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A8B118851471AE3A008A993B /* UTCMenuClock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8B118B91471AE3A008A993B /* Build configuration list for PBXNativeTarget "UTCMenuClock" */;
+			buildPhases = (
+				A8B118821471AE3A008A993B /* Sources */,
+				A8B118831471AE3A008A993B /* Frameworks */,
+				A8B118841471AE3A008A993B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UTCMenuClock;
+			productName = UTCMenuClock;
+			productReference = A8B118861471AE3A008A993B /* UTCMenuClock.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A8B118A61471AE3A008A993B /* UTCMenuClockTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8B118BC1471AE3A008A993B /* Build configuration list for PBXNativeTarget "UTCMenuClockTests" */;
+			buildPhases = (
+				A8B118A21471AE3A008A993B /* Sources */,
+				A8B118A31471AE3A008A993B /* Frameworks */,
+				A8B118A41471AE3A008A993B /* Resources */,
+				A8B118A51471AE3A008A993B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A8B118AC1471AE3A008A993B /* PBXTargetDependency */,
+			);
+			name = UTCMenuClockTests;
+			productName = UTCMenuClockTests;
+			productReference = A8B118A71471AE3A008A993B /* UTCMenuClockTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A8B1187D1471AE3A008A993B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = Twitter;
+			};
+			buildConfigurationList = A8B118801471AE3A008A993B /* Build configuration list for PBXProject "UTCMenuClock" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A8B1187B1471AE3A008A993B;
+			productRefGroup = A8B118871471AE3A008A993B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A8B118851471AE3A008A993B /* UTCMenuClock */,
+				A8B118A61471AE3A008A993B /* UTCMenuClockTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A8B118841471AE3A008A993B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8B118951471AE3A008A993B /* InfoPlist.strings in Resources */,
+				A8B1189B1471AE3A008A993B /* Credits.rtf in Resources */,
+				A8B118A11471AE3A008A993B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8B118A41471AE3A008A993B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8B118B21471AE3A008A993B /* InfoPlist.strings in Resources */,
+				A8B118B41471AE3A008A993B /* UTCMenuClockTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A8B118A51471AE3A008A993B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A8B118821471AE3A008A993B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8B118971471AE3A008A993B /* main.m in Sources */,
+				A8B1189E1471AE3A008A993B /* UTCMenuClockAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8B118A21471AE3A008A993B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8B118B61471AE3A008A993B /* UTCMenuClockTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A8B118AC1471AE3A008A993B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A8B118851471AE3A008A993B /* UTCMenuClock */;
+			targetProxy = A8B118AB1471AE3A008A993B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A8B118931471AE3A008A993B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8B118941471AE3A008A993B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A8B118991471AE3A008A993B /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8B1189A1471AE3A008A993B /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A8B1189F1471AE3A008A993B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8B118A01471AE3A008A993B /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		A8B118B01471AE3A008A993B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A8B118B11471AE3A008A993B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A8B118B71471AE3A008A993B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A8B118B81471AE3A008A993B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A8B118BA1471AE3A008A993B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
+				INFOPLIST_FILE = "UTCMenuClock/UTCMenuClock-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A8B118BB1471AE3A008A993B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
+				INFOPLIST_FILE = "UTCMenuClock/UTCMenuClock-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A8B118BD1471AE3A008A993B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UTCMenuClock.app/Contents/MacOS/UTCMenuClock";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
+				INFOPLIST_FILE = "UTCMenuClockTests/UTCMenuClockTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		A8B118BE1471AE3A008A993B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UTCMenuClock.app/Contents/MacOS/UTCMenuClock";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
+				INFOPLIST_FILE = "UTCMenuClockTests/UTCMenuClockTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A8B118801471AE3A008A993B /* Build configuration list for PBXProject "UTCMenuClock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8B118B71471AE3A008A993B /* Debug */,
+				A8B118B81471AE3A008A993B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A8B118B91471AE3A008A993B /* Build configuration list for PBXNativeTarget "UTCMenuClock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8B118BA1471AE3A008A993B /* Debug */,
+				A8B118BB1471AE3A008A993B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A8B118BC1471AE3A008A993B /* Build configuration list for PBXNativeTarget "UTCMenuClockTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8B118BD1471AE3A008A993B /* Debug */,
+				A8B118BE1471AE3A008A993B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A8B1187D1471AE3A008A993B /* Project object */;
+}
