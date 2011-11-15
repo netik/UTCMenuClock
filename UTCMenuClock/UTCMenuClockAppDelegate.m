@@ -19,6 +19,7 @@
 //
 
 #import "UTCMenuClockAppDelegate.h"
+#import "LaunchAtLoginController.h"
 
 @implementation UTCMenuClockAppDelegate
 
@@ -39,6 +40,21 @@ NSMenuItem   *dateMenuItem;
     [[NSApplication sharedApplication] terminate:nil];
 }
 
+- (void) toggleLaunch:(id)sender {
+    NSInteger state = [sender state];
+    LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
+
+    if (state == NSOffState) { 
+        [sender setState:NSOnState];
+        [launchController setLaunchAtLogin:YES];
+    } else { 
+        [sender setState:NSOffState];
+        [launchController setLaunchAtLogin:NO];
+    }
+    
+    [launchController release];
+}
+
 - (void) openGithubURL:(id)sender {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://github.com/netik/UTCMenuClock"]];
 }
@@ -55,7 +71,7 @@ NSMenuItem   *dateMenuItem;
     [UTCdateDF setTimeZone: UTCtz];
     
     [UTCdf setDateFormat: @"HH:mm:ss"];
-    [UTCdateDF setDateFormat: @"MM-dd-YYYY"];
+    [UTCdateDF setDateStyle:NSDateFormatterFullStyle];
     
     NSString* UTCtimepart = [UTCdf stringFromDate: date];
     NSString* UTCdatepart = [UTCdateDF stringFromDate: date];
@@ -97,6 +113,8 @@ NSMenuItem   *dateMenuItem;
     NSMenuItem *cp2Item = [[NSMenuItem alloc] init];
     NSMenuItem *cp3Item = [[NSMenuItem alloc] init];
     NSMenuItem *quitItem = [[NSMenuItem alloc] init];
+    NSMenuItem *launchItem = [[NSMenuItem alloc] init];
+
     NSMenuItem *sepItem = [NSMenuItem separatorItem];
     NSMenuItem *sep2Item = [NSMenuItem separatorItem];
 
@@ -109,6 +127,10 @@ NSMenuItem   *dateMenuItem;
     [cp3Item setEnabled:TRUE];
     [cp3Item setAction:@selector(openGithubURL:)];
 
+    [launchItem setTitle:@"Open at Login"];
+    [launchItem setEnabled:TRUE];
+    [launchItem setAction:@selector(toggleLaunch:)];
+    
     [quitItem setTitle:@"Quit"];
     [quitItem setEnabled:TRUE];
     [quitItem setAction:@selector(quitProgram:)];
@@ -123,10 +145,24 @@ NSMenuItem   *dateMenuItem;
     // "---"
     [mainMenu addItem:sep2Item];
     // "---"
+    
+    // lastly, deal with Launch at Login
+    LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
+	BOOL launch = [launchController launchAtLogin];
+    [launchController release];
+    
+    if (launch) { 
+        [launchItem setState:NSOnState];
+    } else { 
+        [launchItem setState:NSOffState];
+    }
+    
+    [mainMenu addItem:launchItem];
     [mainMenu addItem:quitItem];
     
     [theItem setMenu:(NSMenu *)mainMenu];
-
+    
+    
     // Update the date immediately after setup so that there is no timer lag
     [self doDateUpdate];
     

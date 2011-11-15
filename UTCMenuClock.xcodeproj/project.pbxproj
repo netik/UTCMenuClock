@@ -18,6 +18,8 @@
 		A8B118B21471AE3A008A993B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8B118B01471AE3A008A993B /* InfoPlist.strings */; };
 		A8B118B41471AE3A008A993B /* UTCMenuClockTests.h in Resources */ = {isa = PBXBuildFile; fileRef = A8B118B31471AE3A008A993B /* UTCMenuClockTests.h */; };
 		A8B118B61471AE3A008A993B /* UTCMenuClockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B118B51471AE3A008A993B /* UTCMenuClockTests.m */; };
+		A8B119261471EB13008A993B /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B119011471EB13008A993B /* LaunchAtLoginController.m */; };
+		A8B119271471EB13008A993B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A8B119021471EB13008A993B /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,9 @@
 		A8B118B11471AE3A008A993B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A8B118B31471AE3A008A993B /* UTCMenuClockTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UTCMenuClockTests.h; sourceTree = "<group>"; };
 		A8B118B51471AE3A008A993B /* UTCMenuClockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTCMenuClockTests.m; sourceTree = "<group>"; };
+		A8B119001471EB13008A993B /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
+		A8B119011471EB13008A993B /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
+		A8B119021471EB13008A993B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +122,7 @@
 			children = (
 				A8B1189C1471AE3A008A993B /* UTCMenuClockAppDelegate.h */,
 				A8B1189D1471AE3A008A993B /* UTCMenuClockAppDelegate.m */,
+				A8B118BF1471EB12008A993B /* LaunchAtLoginController */,
 				A8B1189F1471AE3A008A993B /* MainMenu.xib */,
 				A8B118911471AE3A008A993B /* Supporting Files */,
 			);
@@ -152,6 +158,16 @@
 				A8B118B01471AE3A008A993B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A8B118BF1471EB12008A993B /* LaunchAtLoginController */ = {
+			isa = PBXGroup;
+			children = (
+				A8B119001471EB13008A993B /* LaunchAtLoginController.h */,
+				A8B119011471EB13008A993B /* LaunchAtLoginController.m */,
+				A8B119021471EB13008A993B /* README.md */,
+			);
+			path = LaunchAtLoginController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +243,7 @@
 				A8B118951471AE3A008A993B /* InfoPlist.strings in Resources */,
 				A8B1189B1471AE3A008A993B /* Credits.rtf in Resources */,
 				A8B118A11471AE3A008A993B /* MainMenu.xib in Resources */,
+				A8B119271471EB13008A993B /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +281,7 @@
 			files = (
 				A8B118971471AE3A008A993B /* main.m in Sources */,
 				A8B1189E1471AE3A008A993B /* UTCMenuClockAppDelegate.m in Sources */,
+				A8B119261471EB13008A993B /* LaunchAtLoginController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
