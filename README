@@ -3,5 +3,8 @@ Menu Status Bar. I desperately wanted two clocks as the network that I
 work on uses UTC Time exclusively for all of our devices. Converting
 in my head was a true pain.
 
+Uses LaunchController, which is Copyright (c) 2010 Ben Clark-Robinson, 
+ben.clarkrobinson@gmail.com
+
 John Adams
 11/2011
