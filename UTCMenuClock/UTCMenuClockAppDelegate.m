@@ -42,7 +42,7 @@ NSMenuItem   *dateMenuItem;
 -(BOOL)retrieveFromUserDefaults
 {
 	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-	BOOL val;
+	BOOL val = FALSE;
 	
 	if (standardUserDefaults) 
 		val = [standardUserDefaults boolForKey:@"ShowDate"];
@@ -157,12 +157,12 @@ NSMenuItem   *dateMenuItem;
     NSMenuItem *mainItem = [[NSMenuItem alloc] init];
     dateMenuItem = mainItem;
     
-    NSMenuItem *cp1Item = [[NSMenuItem alloc] init];
-    NSMenuItem *cp2Item = [[NSMenuItem alloc] init];
-    NSMenuItem *cp3Item = [[NSMenuItem alloc] init];
-    NSMenuItem *quitItem = [[NSMenuItem alloc] init];
-    NSMenuItem *launchItem = [[NSMenuItem alloc] init];
-    NSMenuItem *showDateItem = [[NSMenuItem alloc] init];
+    NSMenuItem *cp1Item = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *cp2Item = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *cp3Item = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *quitItem = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *launchItem = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *showDateItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *sep1Item = [NSMenuItem separatorItem];
     NSMenuItem *sep2Item = [NSMenuItem separatorItem];
     NSMenuItem *sep3Item = [NSMenuItem separatorItem];
@@ -232,6 +232,7 @@ NSMenuItem   *dateMenuItem;
     
     NSNumber *myInt = [NSNumber numberWithInt:1];
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fireTimer:) userInfo:myInt repeats:YES];
+
     
 }
 
