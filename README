@@ -3,8 +3,15 @@ Menu Status Bar. I desperately wanted two clocks as the network that I
 work on uses UTC Time exclusively for all of our devices. Converting
 in my head was a true pain.
 
+The latest version is 1.0a, downloadable from GitHub via this Link:
+
+https://github.com/downloads/netik/UTCMenuClock/UTCMenuClock-1.0a.zip
+
 Uses LaunchController, which is Copyright (c) 2010 Ben Clark-Robinson, 
 ben.clarkrobinson@gmail.com
 
+Compiled under XCode 4 and MacOS 10.7.
+
+----
 John Adams
 11/2011
