@@ -453,6 +453,7 @@
 				A8B118BB1471AE3A008A993B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A8B118BC1471AE3A008A993B /* Build configuration list for PBXNativeTarget "UTCMenuClockTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +462,7 @@
 				A8B118BE1471AE3A008A993B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
