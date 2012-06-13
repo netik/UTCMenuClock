@@ -54,30 +54,25 @@ NSMenuItem   *dateMenuItem;
     [launchController release];
 }
 
-- (void) toggleDate:(id)sender {
-    NSInteger state = [sender state];
-     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-
-    if (state == NSOffState) {
-        [sender setState:NSOnState];
-        [standardUserDefaults setBool:TRUE forKey:@"ShowDate"];
-    } else {
-        [sender setState:NSOffState];
-        [standardUserDefaults setBool:FALSE forKey:@"ShowDate"];
-    }
-
+- (BOOL) fetchBooleanPreference:(NSString *)preference {
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL value = [standardUserDefaults boolForKey:preference];
+    return value;
 }
 
-- (void) toggleSeconds:(id)sender {
+- (void) togglePreference:(id)sender {
     NSInteger state = [sender state];
-     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *preference = [sender title];
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
 
+    preference = [preference stringByReplacingOccurrencesOfString:@" "
+                                                withString:@""];
     if (state == NSOffState) {
         [sender setState:NSOnState];
-        [standardUserDefaults setBool:TRUE forKey:@"ShowSeconds"];
+        [standardUserDefaults setBool:TRUE forKey:preference];
     } else {
         [sender setState:NSOffState];
-        [standardUserDefaults setBool:FALSE forKey:@"ShowSeconds"];
+        [standardUserDefaults setBool:FALSE forKey:preference];
     }
 
 }
@@ -99,9 +94,8 @@ NSMenuItem   *dateMenuItem;
     [UTCdateDF setTimeZone: UTCtz];
     [UTCdateShortDF setTimeZone: UTCtz];
 
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL showDate = [standardUserDefaults boolForKey:@"ShowDate"];
-    BOOL showSeconds = [standardUserDefaults boolForKey:@"ShowSeconds"];
+    BOOL showDate = [self fetchBooleanPreference:@"ShowDate"];
+    BOOL showSeconds = [self fetchBooleanPreference:@"ShowSeconds"];
     if (showSeconds){
         [UTCdf setDateFormat: @"HH:mm:ss"];
     } else {
@@ -180,11 +174,11 @@ NSMenuItem   *dateMenuItem;
 
     [showDateItem setTitle:@"Show Date"];
     [showDateItem setEnabled:TRUE];
-    [showDateItem setAction:@selector(toggleDate:)];
+    [showDateItem setAction:@selector(togglePreference:)];
 
     [showSecondsItem setTitle:@"Show Seconds"];
     [showSecondsItem setEnabled:TRUE];
-    [showSecondsItem setAction:@selector(toggleSeconds:)];
+    [showSecondsItem setAction:@selector(togglePreference:)];
 
     [quitItem setTitle:@"Quit"];
     [quitItem setEnabled:TRUE];
