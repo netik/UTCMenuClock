@@ -8,7 +8,7 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -29,103 +29,100 @@
 NSStatusItem *ourStatus;
 NSMenuItem   *dateMenuItem;
 
--(void)saveToUserDefaults:(BOOL)dateFlag {
-	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
-    // we only have one flag right now, so we'll keep it simple. 
-	if (standardUserDefaults) {
-        [standardUserDefaults setBool:dateFlag forKey:@"ShowDate"];
-        [standardUserDefaults synchronize];
-	}
-}
-
--(BOOL)retrieveFromUserDefaults
-{
-	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-	BOOL val = FALSE;
-	
-	if (standardUserDefaults) 
-		val = [standardUserDefaults boolForKey:@"ShowDate"];
-	
-	return val;
-}
-
-
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
 
 }
 
 - (void) quitProgram:(id)sender {
-    // Cleanup here if necessary... 
+    // Cleanup here if necessary...
     [[NSApplication sharedApplication] terminate:nil];
 }
 
 - (void) toggleLaunch:(id)sender {
     NSInteger state = [sender state];
     LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
-    
-    if (state == NSOffState) { 
+
+    if (state == NSOffState) {
         [sender setState:NSOnState];
         [launchController setLaunchAtLogin:YES];
-    } else { 
+    } else {
         [sender setState:NSOffState];
         [launchController setLaunchAtLogin:NO];
     }
-    
+
     [launchController release];
 }
 
 - (void) toggleDate:(id)sender {
     NSInteger state = [sender state];
-    
-    if (state == NSOffState) { 
+     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+
+    if (state == NSOffState) {
         [sender setState:NSOnState];
-        [self saveToUserDefaults:TRUE];
-    } else { 
+        [standardUserDefaults setBool:TRUE forKey:@"ShowDate"];
+    } else {
         [sender setState:NSOffState];
-        [self saveToUserDefaults:FALSE];
+        [standardUserDefaults setBool:FALSE forKey:@"ShowDate"];
     }
-    
+
+}
+
+- (void) toggleSeconds:(id)sender {
+    NSInteger state = [sender state];
+     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+
+    if (state == NSOffState) {
+        [sender setState:NSOnState];
+        [standardUserDefaults setBool:TRUE forKey:@"ShowSeconds"];
+    } else {
+        [sender setState:NSOffState];
+        [standardUserDefaults setBool:FALSE forKey:@"ShowSeconds"];
+    }
+
 }
 
 - (void) openGithubURL:(id)sender {
-    [[NSWorkspace sharedWorkspace] 
+    [[NSWorkspace sharedWorkspace]
         openURL:[NSURL URLWithString:@"http://github.com/netik/UTCMenuClock"]];
 }
 
 - (void) doDateUpdate {
-    
+
     NSDate* date = [NSDate date];
     NSDateFormatter* UTCdf = [[[NSDateFormatter alloc] init] autorelease];
     NSDateFormatter* UTCdateDF = [[[NSDateFormatter alloc] init] autorelease];
     NSDateFormatter* UTCdateShortDF = [[[NSDateFormatter alloc] init] autorelease];
     NSTimeZone* UTCtz = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-    
+
     [UTCdf setTimeZone: UTCtz];
     [UTCdateDF setTimeZone: UTCtz];
     [UTCdateShortDF setTimeZone: UTCtz];
-    
-    [UTCdf setDateFormat: @"HH:mm:ss"];
+
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL showDate = [standardUserDefaults boolForKey:@"ShowDate"];
+    BOOL showSeconds = [standardUserDefaults boolForKey:@"ShowSeconds"];
+    if (showSeconds){
+        [UTCdf setDateFormat: @"HH:mm:ss"];
+    } else {
+        [UTCdf setDateFormat: @"HH:mm"];
+    }
+
     [UTCdateDF setDateStyle:NSDateFormatterFullStyle];
     [UTCdateShortDF setDateStyle:NSDateFormatterShortStyle];
-    
+
     NSString* UTCtimepart = [UTCdf stringFromDate: date];
     NSString* UTCdatepart = [UTCdateDF stringFromDate: date];
     NSString* UTCdateShort = [UTCdateShortDF stringFromDate: date];
 
-    BOOL showDate = [self retrieveFromUserDefaults];
-    
-    if (showDate) { 
+    if (showDate) {
         [ourStatus setTitle:[NSString stringWithFormat:@"%@ %@ UTC", UTCdateShort, UTCtimepart]];
-    } else { 
+    } else {
         [ourStatus setTitle:[NSString stringWithFormat:@"%@ UTC",UTCtimepart]];
     }
 
     [dateMenuItem setTitle:UTCdatepart];
-    
+
 }
 
 // this is the main work loop, fired on 1s intervals.
@@ -136,7 +133,7 @@ NSMenuItem   *dateMenuItem;
 - (void)awakeFromNib
 {
     mainMenu = [[NSMenu alloc] init];
-    
+
     //Create Image for menu item
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     NSStatusItem *theItem;
@@ -144,11 +141,11 @@ NSMenuItem   *dateMenuItem;
     [theItem retain];
     // retain a reference to the item so we don't have to find it again
     ourStatus = theItem;
-    
+
     //Set Image
     //[theItem setImage:(NSImage *)menuicon];
     [theItem setTitle:@""];
-    
+
     //Make it turn blue when you click on it
     [theItem setHighlightMode:YES];
     [theItem setEnabled: YES];
@@ -156,34 +153,39 @@ NSMenuItem   *dateMenuItem;
     // build the menu
     NSMenuItem *mainItem = [[NSMenuItem alloc] init];
     dateMenuItem = mainItem;
-    
+
     NSMenuItem *cp1Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *cp2Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *cp3Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *quitItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *launchItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showDateItem = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *showSecondsItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *sep1Item = [NSMenuItem separatorItem];
     NSMenuItem *sep2Item = [NSMenuItem separatorItem];
     NSMenuItem *sep3Item = [NSMenuItem separatorItem];
 
     [mainItem setTitle:@""];
-    
+
     [cp1Item setTitle:@"UTC Menu Clock v1.0b"];
     [cp2Item setTitle:@"jna@retina.net"];
     [cp3Item setTitle:@"http://github.com/netik/UTCMenuClock"];
 
     [cp3Item setEnabled:TRUE];
     [cp3Item setAction:@selector(openGithubURL:)];
-    
+
     [launchItem setTitle:@"Open at Login"];
     [launchItem setEnabled:TRUE];
     [launchItem setAction:@selector(toggleLaunch:)];
-    
+
     [showDateItem setTitle:@"Show Date"];
     [showDateItem setEnabled:TRUE];
     [showDateItem setAction:@selector(toggleDate:)];
-    
+
+    [showSecondsItem setTitle:@"Show Seconds"];
+    [showSecondsItem setEnabled:TRUE];
+    [showSecondsItem setAction:@selector(toggleSeconds:)];
+
     [quitItem setTitle:@"Quit"];
     [quitItem setEnabled:TRUE];
     [quitItem setAction:@selector(quitProgram:)];
@@ -199,41 +201,50 @@ NSMenuItem   *dateMenuItem;
     [mainMenu addItem:cp3Item];
     // "---"
     [mainMenu addItem:sep3Item];
-    
+
     // showDateItem
-    BOOL showDate = [self retrieveFromUserDefaults];
-    
-    if (showDate) { 
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL showDate = [standardUserDefaults boolForKey:@"ShowDate"];
+    BOOL showSeconds = [standardUserDefaults boolForKey:@"ShowSeconds"];
+
+    if (showDate) {
         [showDateItem setState:NSOnState];
-    } else { 
+    } else {
         [showDateItem setState:NSOffState];
     }
-    
-    // lastly, deal with Launch at Login
+
+    if (showSeconds) {
+        [showSecondsItem setState:NSOnState];
+    } else {
+        [showSecondsItem setState:NSOffState];
+    }
+
+    // latsly, deal with Launch at Login
     LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
-	BOOL launch = [launchController launchAtLogin];
+    BOOL launch = [launchController launchAtLogin];
     [launchController release];
-    
-    if (launch) { 
+
+    if (launch) {
         [launchItem setState:NSOnState];
-    } else { 
+    } else {
         [launchItem setState:NSOffState];
     }
-    
+
     [mainMenu addItem:launchItem];
     [mainMenu addItem:showDateItem];
+    [mainMenu addItem:showSecondsItem];
     [mainMenu addItem:quitItem];
-    
+
     [theItem setMenu:(NSMenu *)mainMenu];
-    
-    
+
+
     // Update the date immediately after setup so that there is no timer lag
     [self doDateUpdate];
-    
+
     NSNumber *myInt = [NSNumber numberWithInt:1];
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fireTimer:) userInfo:myInt repeats:YES];
 
-    
+
 }
 
 @end
