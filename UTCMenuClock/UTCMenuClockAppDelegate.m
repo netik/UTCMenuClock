@@ -197,9 +197,8 @@ NSMenuItem   *dateMenuItem;
     [mainMenu addItem:sep3Item];
 
     // showDateItem
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL showDate = [standardUserDefaults boolForKey:@"ShowDate"];
-    BOOL showSeconds = [standardUserDefaults boolForKey:@"ShowSeconds"];
+    BOOL showDate = [self fetchBooleanPreference:@"ShowDate"];
+    BOOL showSeconds = [self fetchBooleanPreference:@"ShowSeconds"];
 
     if (showDate) {
         [showDateItem setState:NSOnState];
