@@ -161,7 +161,7 @@ NSMenuItem   *dateMenuItem;
 
     [mainItem setTitle:@""];
 
-    [cp1Item setTitle:@"UTC Menu Clock v1.0b"];
+    [cp1Item setTitle:@"UTC Menu Clock v1.1"];
     [cp2Item setTitle:@"jna@retina.net"];
     [cp3Item setTitle:@"http://github.com/netik/UTCMenuClock"];
 
