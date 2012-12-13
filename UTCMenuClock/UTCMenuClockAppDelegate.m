@@ -27,9 +27,8 @@
 @synthesize mainMenu;
 
 NSStatusItem *ourStatus;
-NSMenuItem   *dateMenuItem;
+NSMenuItem *dateMenuItem;
 NSMenuItem *showTimeZoneItem;
-
 
 - (void) quitProgram:(id)sender {
     // Cleanup here if necessary...
@@ -78,6 +77,7 @@ NSMenuItem *showTimeZoneItem;
     [[NSWorkspace sharedWorkspace]
         openURL:[NSURL URLWithString:@"http://github.com/netik/UTCMenuClock"]];
 }
+
 
 - (void) doDateUpdate {
 
@@ -138,6 +138,13 @@ NSMenuItem *showTimeZoneItem;
 
 }
 
+- (IBAction)showFontMenu:(id)sender {
+    NSFontManager *fontManager = [NSFontManager sharedFontManager];
+    [fontManager setDelegate:self];
+    
+    NSFontPanel *fontPanel = [fontManager fontPanel:YES];
+    [fontPanel makeKeyAndOrderFront:sender];
+}
 // this is the main work loop, fired on 1s intervals.
 - (void) fireTimer:(NSTimer*)theTimer {
     [self doDateUpdate];
@@ -145,14 +152,22 @@ NSMenuItem *showTimeZoneItem;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // set our default preferences if they've never been set before.
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    if ([standardUserDefaults dataForKey:@"ShowTimeZone"] == NULL) { 
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *dateKey    = @"dateKey";
+    NSDate *lastRead    = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:dateKey];
+    if (lastRead == nil)     // App first run: set up user defaults.
+    {
+        NSDictionary *appDefaults  = [NSDictionary dictionaryWithObjectsAndKeys:[NSDate date], dateKey, nil];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:dateKey];
+
         [standardUserDefaults setBool:TRUE forKey:@"ShowTimeZone"];
         [showTimeZoneItem setState:NSOnState];
-        [self doDateUpdate];
-    }
-    
+    }    
+    [self doDateUpdate];
+
 }
 
 - (void)awakeFromNib
@@ -187,11 +202,14 @@ NSMenuItem *showTimeZoneItem;
     NSMenuItem *showDateItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showSecondsItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showJulianItem = [[[NSMenuItem alloc] init] autorelease];
+ //   NSMenuItem *changeFontItem = [[[NSMenuItem alloc] init] autorelease];
+    
     showTimeZoneItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *sep1Item = [NSMenuItem separatorItem];
     NSMenuItem *sep2Item = [NSMenuItem separatorItem];
     NSMenuItem *sep3Item = [NSMenuItem separatorItem];
-
+    NSMenuItem *sep4Item = [NSMenuItem separatorItem];
+    
     [mainItem setTitle:@""];
 
     [cp1Item setTitle:@"UTC Menu Clock v1.2"];
@@ -220,6 +238,9 @@ NSMenuItem *showTimeZoneItem;
     [showTimeZoneItem setTitle:@"Show Time Zone"];
     [showTimeZoneItem setEnabled:TRUE];
     [showTimeZoneItem setAction:@selector(togglePreference:)];
+    
+ //   [changeFontItem setTitle:@"Change Font..."];
+  //  [changeFontItem setAction:@selector(showFontMenu:)];
     
     [quitItem setTitle:@"Quit"];
     [quitItem setEnabled:TRUE];
@@ -284,10 +305,12 @@ NSMenuItem *showTimeZoneItem;
     [mainMenu addItem:showSecondsItem];
     [mainMenu addItem:showJulianItem];
     [mainMenu addItem:showTimeZoneItem];
+  //  [mainMenu addItem:changeFontItem];
+    // "---"
+    [mainMenu addItem:sep4Item];
     [mainMenu addItem:quitItem];
 
     [theItem setMenu:(NSMenu *)mainMenu];
-
 
     // Update the date immediately after setup so that there is no timer lag
     [self doDateUpdate];
