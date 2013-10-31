@@ -20,7 +20,6 @@
 		A8B118B61471AE3A008A993B /* UTCMenuClockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B118B51471AE3A008A993B /* UTCMenuClockTests.m */; };
 		A8B119261471EB13008A993B /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B119011471EB13008A993B /* LaunchAtLoginController.m */; };
 		A8B119271471EB13008A993B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A8B119021471EB13008A993B /* README.md */; };
-		DA1B0A091822FCF600C57253 /* 24h_clock_v1.png in Resources */ = {isa = PBXBuildFile; fileRef = DA1B0A081822FCF600C57253 /* 24h_clock_v1.png */; };
 		DA1B0A0B1822FCFF00C57253 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA1B0A0A1822FCFF00C57253 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -57,7 +56,6 @@
 		A8B119001471EB13008A993B /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		A8B119011471EB13008A993B /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		A8B119021471EB13008A993B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		DA1B0A081822FCF600C57253 /* 24h_clock_v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 24h_clock_v1.png; sourceTree = "<group>"; };
 		DA1B0A0A1822FCFF00C57253 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,7 +83,6 @@
 		A8B1187B1471AE3A008A993B = {
 			isa = PBXGroup;
 			children = (
-				DA1B0A081822FCF600C57253 /* 24h_clock_v1.png */,
 				A8B118901471AE3A008A993B /* UTCMenuClock */,
 				A8B118AD1471AE3A008A993B /* UTCMenuClockTests */,
 				A8B118891471AE3A008A993B /* Frameworks */,
@@ -251,7 +248,6 @@
 				A8B1189B1471AE3A008A993B /* Credits.rtf in Resources */,
 				A8B118A11471AE3A008A993B /* MainMenu.xib in Resources */,
 				DA1B0A0B1822FCFF00C57253 /* Images.xcassets in Resources */,
-				DA1B0A091822FCF600C57253 /* 24h_clock_v1.png in Resources */,
 				A8B119271471EB13008A993B /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
