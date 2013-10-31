@@ -20,6 +20,8 @@
 		A8B118B61471AE3A008A993B /* UTCMenuClockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B118B51471AE3A008A993B /* UTCMenuClockTests.m */; };
 		A8B119261471EB13008A993B /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B119011471EB13008A993B /* LaunchAtLoginController.m */; };
 		A8B119271471EB13008A993B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A8B119021471EB13008A993B /* README.md */; };
+		DA1B0A091822FCF600C57253 /* 24h_clock_v1.png in Resources */ = {isa = PBXBuildFile; fileRef = DA1B0A081822FCF600C57253 /* 24h_clock_v1.png */; };
+		DA1B0A0B1822FCFF00C57253 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA1B0A0A1822FCFF00C57253 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		A8B119001471EB13008A993B /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		A8B119011471EB13008A993B /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		A8B119021471EB13008A993B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		DA1B0A081822FCF600C57253 /* 24h_clock_v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 24h_clock_v1.png; sourceTree = "<group>"; };
+		DA1B0A0A1822FCFF00C57253 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,7 @@
 		A8B1187B1471AE3A008A993B = {
 			isa = PBXGroup;
 			children = (
+				DA1B0A081822FCF600C57253 /* 24h_clock_v1.png */,
 				A8B118901471AE3A008A993B /* UTCMenuClock */,
 				A8B118AD1471AE3A008A993B /* UTCMenuClockTests */,
 				A8B118891471AE3A008A993B /* Frameworks */,
@@ -124,6 +129,7 @@
 				A8B1189D1471AE3A008A993B /* UTCMenuClockAppDelegate.m */,
 				A8B118BF1471EB12008A993B /* LaunchAtLoginController */,
 				A8B1189F1471AE3A008A993B /* MainMenu.xib */,
+				DA1B0A0A1822FCFF00C57253 /* Images.xcassets */,
 				A8B118911471AE3A008A993B /* Supporting Files */,
 			);
 			path = UTCMenuClock;
@@ -215,7 +221,8 @@
 		A8B1187D1471AE3A008A993B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				ORGANIZATIONNAME = Twitter;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = A8B118801471AE3A008A993B /* Build configuration list for PBXProject "UTCMenuClock" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -243,6 +250,8 @@
 				A8B118951471AE3A008A993B /* InfoPlist.strings in Resources */,
 				A8B1189B1471AE3A008A993B /* Credits.rtf in Resources */,
 				A8B118A11471AE3A008A993B /* MainMenu.xib in Resources */,
+				DA1B0A0B1822FCFF00C57253 /* Images.xcassets in Resources */,
+				DA1B0A091822FCF600C57253 /* 24h_clock_v1.png in Resources */,
 				A8B119271471EB13008A993B /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,7 +352,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -358,8 +372,11 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -369,7 +386,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -378,8 +400,11 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -387,6 +412,7 @@
 		A8B118BA1471AE3A008A993B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
 				INFOPLIST_FILE = "UTCMenuClock/UTCMenuClock-Info.plist";
@@ -398,6 +424,7 @@
 		A8B118BB1471AE3A008A993B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
 				INFOPLIST_FILE = "UTCMenuClock/UTCMenuClock-Info.plist";
@@ -410,6 +437,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UTCMenuClock.app/Contents/MacOS/UTCMenuClock";
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
@@ -424,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UTCMenuClock.app/Contents/MacOS/UTCMenuClock";
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
