@@ -14,6 +14,12 @@ ben.clarkrobinson@gmail.com
 
 Compiled under XCode 4 and MacOS 10.7.
 
+NOTE: After you install this software, you still have to run it to use it.  
+
+Double-click "UTCMenuClock" in your /Applications folder. If you want it to 
+start automatically every time, click on the UTC clock in the menu bar and 
+select "Open At Login"
+
 ----
 John Adams
 11/2011
