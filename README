@@ -3,7 +3,7 @@ Menu Status Bar. I desperately wanted two clocks as the network that I
 work on uses UTC Time exclusively for all of our devices. Converting
 in my head was a true pain.
 
-The latest version is 1.2afor Mac OS 10.6 and 10.7 (Intel) downloadable from
+The latest version is 1.2a for Mac OS 10.6 and 10.7 (Intel) downloadable from
 GitHub in the Downloads section:
 
 https://github.com/netik/UTCMenuClock/downloads
@@ -12,14 +12,15 @@ https://github.com/netik/UTCMenuClock/downloads
 Uses LaunchController, which is Copyright (c) 2010 Ben Clark-Robinson, 
 ben.clarkrobinson@gmail.com
 
-Compiled under XCode 4 and MacOS 10.7.
+Compiled under XCode 4 and MacOS 10.7. It will run just fine in all
+current MacOS versions, including Yosemite (10.10)
 
-NOTE: After you install this software, you still have to run it to use it.  
+NOTE: After you install this software, you still have to run it to use it:   
 
 Double-click "UTCMenuClock" in your /Applications folder. If you want it to 
-start automatically every time, click on the UTC clock in the menu bar and 
-select "Open At Login"
+start automatically every time you log in , click on the UTC clock in the menu 
+bar and select "Open At Login"
 
 ----
 John Adams
-11/2011
+12/2014
