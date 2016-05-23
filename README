@@ -26,8 +26,8 @@ John Adams
 12/2014
 
 ----
-This branch uses UTC instead of GMT for the clock. UTC and GMT are not interchangable time zones, they may differ
-by a few seconds a times.
+This branch uses UTC instead of GMT for the clock. UTC and GMT are not
+interchangable time zones, they may differ by a few seconds.
 
 http://www.differencebetween.com/difference-between-gmt-and-utc/
 ----
