@@ -29,6 +29,7 @@
 NSStatusItem *ourStatus;
 NSMenuItem *dateMenuItem;
 NSMenuItem *showTimeZoneItem;
+NSMenuItem *show24HrTimeItem;
 
 - (void) quitProgram:(id)sender {
     // Cleanup here if necessary...
@@ -98,13 +99,21 @@ NSMenuItem *showTimeZoneItem;
     BOOL showSeconds = [self fetchBooleanPreference:@"ShowSeconds"];
     BOOL showJulian = [self fetchBooleanPreference:@"ShowJulianDate"];
     BOOL showTimeZone = [self fetchBooleanPreference:@"ShowTimeZone"];
+    BOOL show24HrTime = [self fetchBooleanPreference:@"24HRTime"];
     
-    if (showSeconds){
-        [UTCdf setDateFormat: @"HH:mm:ss"];
+    if (showSeconds) {
+        if (show24HrTime){
+            [UTCdf setDateFormat: @"HH:mm:ss"];
+        } else {
+            [UTCdf setDateFormat: @"hh:mm:ss a"];
+        }
     } else {
-        [UTCdf setDateFormat: @"HH:mm"];
+        if (show24HrTime){
+            [UTCdf setDateFormat: @"HH:mm"];
+        } else {
+            [UTCdf setDateFormat: @"hh:mm a"];
+        }
     }
-
     [UTCdateDF setDateStyle:NSDateFormatterFullStyle];
     [UTCdateShortDF setDateStyle:NSDateFormatterShortStyle];
     [UTCdaynum setDateFormat:@"D/"];
@@ -164,8 +173,10 @@ NSMenuItem *showTimeZoneItem;
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:dateKey];
 
         [standardUserDefaults setBool:TRUE forKey:@"ShowTimeZone"];
+        [standardUserDefaults setBool:TRUE forKey:@"Show24HrTime"];
         [showTimeZoneItem setState:NSOnState];
-    }    
+        [show24HrTimeItem setState:NSOnState];
+    }
     [self doDateUpdate];
 
 }
@@ -200,6 +211,7 @@ NSMenuItem *showTimeZoneItem;
     NSMenuItem *quitItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *launchItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showDateItem = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *show24Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showSecondsItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showJulianItem = [[[NSMenuItem alloc] init] autorelease];
  //   NSMenuItem *changeFontItem = [[[NSMenuItem alloc] init] autorelease];
@@ -223,6 +235,10 @@ NSMenuItem *showTimeZoneItem;
     [launchItem setEnabled:TRUE];
     [launchItem setAction:@selector(toggleLaunch:)];
 
+    [show24Item setTitle:@"24 HR Time"];
+    [show24Item setEnabled:TRUE];
+    [show24Item setAction:@selector(togglePreference:)];
+    
     [showDateItem setTitle:@"Show Date"];
     [showDateItem setEnabled:TRUE];
     [showDateItem setAction:@selector(togglePreference:)];
@@ -263,8 +279,16 @@ NSMenuItem *showTimeZoneItem;
     BOOL showSeconds = [self fetchBooleanPreference:@"ShowSeconds"];
     BOOL showJulian = [self fetchBooleanPreference:@"ShowJulianDate"];
     BOOL showTimeZone = [self fetchBooleanPreference:@"ShowTimeZone"];
+    BOOL show24HrTime = [self fetchBooleanPreference:@"24HRTime"];
     
-    // TODO: DRY this up a bit. 
+    // TODO: DRY this up a bit.
+    
+    if (show24HrTime) {
+        [show24Item setState:NSOnState];
+    } else {
+        [show24Item setState:NSOffState];
+    }
+    
     if (showDate) {
         [showDateItem setState:NSOnState];
     } else {
@@ -301,6 +325,7 @@ NSMenuItem *showTimeZoneItem;
     }
 
     [mainMenu addItem:launchItem];
+    [mainMenu addItem:show24Item];
     [mainMenu addItem:showDateItem];
     [mainMenu addItem:showSecondsItem];
     [mainMenu addItem:showJulianItem];
