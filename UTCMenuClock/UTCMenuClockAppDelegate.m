@@ -224,7 +224,7 @@ NSMenuItem *show24HrTimeItem;
     
     [mainItem setTitle:@""];
 
-    [cp1Item setTitle:@"UTC Menu Clock v1.2"];
+    [cp1Item setTitle:@"UTC Menu Clock v1.2.3"];
     [cp2Item setTitle:@"jna@retina.net"];
     [cp3Item setTitle:@"http://github.com/netik/UTCMenuClock"];
 
