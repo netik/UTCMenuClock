@@ -3,7 +3,7 @@ Menu Status Bar. I desperately wanted two clocks as the network that I
 work on uses UTC Time exclusively for all of our devices. Converting
 in my head was a true pain.
 
-The latest version is 1.2a for Mac OS 10.6 and 10.7 (Intel) downloadable from
+The latest version is 1.2.3(1) for Mac OS >10.9 downloadable from
 GitHub in the Downloads section:
 
 https://github.com/netik/UTCMenuClock/downloads
