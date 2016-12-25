@@ -1,10 +1,10 @@
 //
-//  UTCMenuClockAppDelegate.m
-//  UTCMenuClock
+// UTCMenuClockAppDelegate.m
+// UTCMenuClock
 //
-//  Created by John Adams on 11/14/11.
+// Created by John Adams on 11/14/11.
 //
-// Copyright 2011 John Adams
+// Copyright 2011-2016 John Adams
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -62,7 +62,7 @@ NSMenuItem *showTimeZoneItem;
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
 
     preference = [preference stringByReplacingOccurrencesOfString:@" "
-                                                withString:@""];
+                                                       withString:@""];
     if (state == NSOffState) {
         [sender setState:NSOnState];
         [standardUserDefaults setBool:TRUE forKey:preference];
