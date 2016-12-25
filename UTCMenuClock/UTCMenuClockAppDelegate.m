@@ -87,7 +87,7 @@ NSMenuItem *showTimeZoneItem;
     NSDateFormatter* UTCdateShortDF = [[[NSDateFormatter alloc] init] autorelease];
     NSDateFormatter* UTCdaynum = [[[NSDateFormatter alloc] init] autorelease];
     
-    NSTimeZone* UTCtz = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone* UTCtz = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
 
     [UTCdf setTimeZone: UTCtz];
     [UTCdateDF setTimeZone: UTCtz];
