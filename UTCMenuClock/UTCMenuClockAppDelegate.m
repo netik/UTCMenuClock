@@ -21,6 +21,12 @@
 #import "UTCMenuClockAppDelegate.h"
 #import "LaunchAtLoginController.h"
 
+static NSString *const showDatePreferenceKey = @"ShowDate";
+static NSString *const showSecondsPreferenceKey = @"ShowSeconds";
+static NSString *const showJulianDatePreferenceKey = @"ShowJulianDate";
+static NSString *const showTimeZonePreferenceKey = @"ShowTimeZone";
+static NSString *const show24HourPreferenceKey = @"24HRTime";
+
 @implementation UTCMenuClockAppDelegate
 
 @synthesize window;
@@ -95,11 +101,11 @@ NSMenuItem *show24HrTimeItem;
     [UTCdateShortDF setTimeZone: UTCtz];
     [UTCdaynum setTimeZone: UTCtz];
 
-    BOOL showDate = [self fetchBooleanPreference:@"ShowDate"];
-    BOOL showSeconds = [self fetchBooleanPreference:@"ShowSeconds"];
-    BOOL showJulian = [self fetchBooleanPreference:@"ShowJulianDate"];
-    BOOL showTimeZone = [self fetchBooleanPreference:@"ShowTimeZone"];
-    BOOL show24HrTime = [self fetchBooleanPreference:@"24HRTime"];
+    BOOL showDate = [self fetchBooleanPreference:showDatePreferenceKey];
+    BOOL showSeconds = [self fetchBooleanPreference:showSecondsPreferenceKey];
+    BOOL showJulian = [self fetchBooleanPreference:showJulianDatePreferenceKey];
+    BOOL showTimeZone = [self fetchBooleanPreference:showTimeZonePreferenceKey];
+    BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
     
     if (showSeconds) {
         if (show24HrTime){
@@ -160,23 +166,19 @@ NSMenuItem *show24HrTimeItem;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // set our default preferences if they've never been set before.
+    // set our default preferences at each launch.
     
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *appDefaults = @{showTimeZonePreferenceKey: @YES,
+                                  show24HourPreferenceKey: @YES,
+                                  showJulianDatePreferenceKey: @NO,
+                                  showDatePreferenceKey: @NO,
+                                  showSecondsPreferenceKey: @NO};
+    [standardUserDefaults registerDefaults:appDefaults];
     NSString *dateKey    = @"dateKey";
-    NSDate *lastRead    = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:dateKey];
-    if (lastRead == nil)     // App first run: set up user defaults.
-    {
-        NSDictionary *appDefaults  = [NSDictionary dictionaryWithObjectsAndKeys:[NSDate date], dateKey, nil];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:dateKey];
+    //Remove old, outdated date key
+    [standardUserDefaults removeObjectForKey:dateKey];
 
-        [standardUserDefaults setBool:TRUE forKey:@"ShowTimeZone"];
-        [standardUserDefaults setBool:TRUE forKey:@"Show24HrTime"];
-        [showTimeZoneItem setState:NSOnState];
-        [show24HrTimeItem setState:NSOnState];
-    }
     [self doDateUpdate];
 
 }
@@ -275,11 +277,11 @@ NSMenuItem *show24HrTimeItem;
     [mainMenu addItem:sep3Item];
 
     // showDateItem
-    BOOL showDate = [self fetchBooleanPreference:@"ShowDate"];
-    BOOL showSeconds = [self fetchBooleanPreference:@"ShowSeconds"];
-    BOOL showJulian = [self fetchBooleanPreference:@"ShowJulianDate"];
-    BOOL showTimeZone = [self fetchBooleanPreference:@"ShowTimeZone"];
-    BOOL show24HrTime = [self fetchBooleanPreference:@"24HRTime"];
+    BOOL showDate = [self fetchBooleanPreference:showDatePreferenceKey];
+    BOOL showSeconds = [self fetchBooleanPreference:showSecondsPreferenceKey];
+    BOOL showJulian = [self fetchBooleanPreference:showJulianDatePreferenceKey];
+    BOOL showTimeZone = [self fetchBooleanPreference:showTimeZonePreferenceKey];
+    BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
     
     // TODO: DRY this up a bit.
     
