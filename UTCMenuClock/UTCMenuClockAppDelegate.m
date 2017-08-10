@@ -65,11 +65,9 @@ NSMenuItem *show24HrTimeItem;
 
 - (void) togglePreference:(id)sender {
     NSInteger state = [sender state];
-    NSString *preference = [sender title];
+    NSString *preference = [sender representedObject];
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
 
-    preference = [preference stringByReplacingOccurrencesOfString:@" "
-                                                       withString:@""];
     if (state == NSOffState) {
         [sender setState:NSOnState];
         [standardUserDefaults setBool:TRUE forKey:preference];
@@ -240,22 +238,27 @@ NSMenuItem *show24HrTimeItem;
     [show24Item setTitle:@"24 HR Time"];
     [show24Item setEnabled:TRUE];
     [show24Item setAction:@selector(togglePreference:)];
+    [show24Item setRepresentedObject:show24HourPreferenceKey];
     
     [showDateItem setTitle:@"Show Date"];
     [showDateItem setEnabled:TRUE];
     [showDateItem setAction:@selector(togglePreference:)];
+    [showDateItem setRepresentedObject:showDatePreferenceKey];
 
     [showSecondsItem setTitle:@"Show Seconds"];
     [showSecondsItem setEnabled:TRUE];
     [showSecondsItem setAction:@selector(togglePreference:)];
+    [showSecondsItem setRepresentedObject:showSecondsPreferenceKey];
     
     [showJulianItem setTitle:@"Show Julian Date"];
     [showJulianItem setEnabled:TRUE];
     [showJulianItem setAction:@selector(togglePreference:)];
+    [showJulianItem setRepresentedObject:showJulianDatePreferenceKey];
 
     [showTimeZoneItem setTitle:@"Show Time Zone"];
     [showTimeZoneItem setEnabled:TRUE];
     [showTimeZoneItem setAction:@selector(togglePreference:)];
+    [showTimeZoneItem setRepresentedObject:showTimeZonePreferenceKey];
     
  //   [changeFontItem setTitle:@"Change Font..."];
   //  [changeFontItem setAction:@selector(showFontMenu:)];
