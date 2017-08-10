@@ -163,19 +163,26 @@ NSMenuItem *show24HrTimeItem;
     [self doDateUpdate];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // set our default preferences at each launch.
+- (id)init {
+    if (self = [super init]) {
+        // set our default preferences at each launch.
+        
+        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *appDefaults = @{showTimeZonePreferenceKey: @YES,
+                                      show24HourPreferenceKey: @YES,
+                                      showJulianDatePreferenceKey: @NO,
+                                      showDatePreferenceKey: @NO,
+                                      showSecondsPreferenceKey: @NO};
+        [standardUserDefaults registerDefaults:appDefaults];
+        NSString *dateKey    = @"dateKey";
+        //Remove old, outdated date key
+        [standardUserDefaults removeObjectForKey:dateKey];
+    }
+    return self;
     
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *appDefaults = @{showTimeZonePreferenceKey: @YES,
-                                  show24HourPreferenceKey: @YES,
-                                  showJulianDatePreferenceKey: @NO,
-                                  showDatePreferenceKey: @NO,
-                                  showSecondsPreferenceKey: @NO};
-    [standardUserDefaults registerDefaults:appDefaults];
-    NSString *dateKey    = @"dateKey";
-    //Remove old, outdated date key
-    [standardUserDefaults removeObjectForKey:dateKey];
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
     [self doDateUpdate];
 
