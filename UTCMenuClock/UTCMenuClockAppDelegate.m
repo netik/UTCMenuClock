@@ -21,6 +21,12 @@
 #import "UTCMenuClockAppDelegate.h"
 #import "LaunchAtLoginController.h"
 
+static NSString *const showDatePreferenceKey = @"ShowDate";
+static NSString *const showSecondsPreferenceKey = @"ShowSeconds";
+static NSString *const showJulianDatePreferenceKey = @"ShowJulianDate";
+static NSString *const showTimeZonePreferenceKey = @"ShowTimeZone";
+static NSString *const show24HourPreferenceKey = @"24HRTime";
+
 @implementation UTCMenuClockAppDelegate
 
 @synthesize window;
@@ -59,11 +65,9 @@ NSMenuItem *show24HrTimeItem;
 
 - (void) togglePreference:(id)sender {
     NSInteger state = [sender state];
-    NSString *preference = [sender title];
+    NSString *preference = [sender representedObject];
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
 
-    preference = [preference stringByReplacingOccurrencesOfString:@" "
-                                                       withString:@""];
     if (state == NSOffState) {
         [sender setState:NSOnState];
         [standardUserDefaults setBool:TRUE forKey:preference];
@@ -95,11 +99,11 @@ NSMenuItem *show24HrTimeItem;
     [UTCdateShortDF setTimeZone: UTCtz];
     [UTCdaynum setTimeZone: UTCtz];
 
-    BOOL showDate = [self fetchBooleanPreference:@"ShowDate"];
-    BOOL showSeconds = [self fetchBooleanPreference:@"ShowSeconds"];
-    BOOL showJulian = [self fetchBooleanPreference:@"ShowJulianDate"];
-    BOOL showTimeZone = [self fetchBooleanPreference:@"ShowTimeZone"];
-    BOOL show24HrTime = [self fetchBooleanPreference:@"24HRTime"];
+    BOOL showDate = [self fetchBooleanPreference:showDatePreferenceKey];
+    BOOL showSeconds = [self fetchBooleanPreference:showSecondsPreferenceKey];
+    BOOL showJulian = [self fetchBooleanPreference:showJulianDatePreferenceKey];
+    BOOL showTimeZone = [self fetchBooleanPreference:showTimeZonePreferenceKey];
+    BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
     
     if (showSeconds) {
         if (show24HrTime){
@@ -159,24 +163,27 @@ NSMenuItem *show24HrTimeItem;
     [self doDateUpdate];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // set our default preferences if they've never been set before.
-    
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *dateKey    = @"dateKey";
-    NSDate *lastRead    = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:dateKey];
-    if (lastRead == nil)     // App first run: set up user defaults.
-    {
-        NSDictionary *appDefaults  = [NSDictionary dictionaryWithObjectsAndKeys:[NSDate date], dateKey, nil];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:dateKey];
-
-        [standardUserDefaults setBool:TRUE forKey:@"ShowTimeZone"];
-        [standardUserDefaults setBool:TRUE forKey:@"Show24HrTime"];
-        [showTimeZoneItem setState:NSOnState];
-        [show24HrTimeItem setState:NSOnState];
+- (id)init {
+    if (self = [super init]) {
+        // set our default preferences at each launch.
+        
+        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *appDefaults = @{showTimeZonePreferenceKey: @YES,
+                                      show24HourPreferenceKey: @YES,
+                                      showJulianDatePreferenceKey: @NO,
+                                      showDatePreferenceKey: @NO,
+                                      showSecondsPreferenceKey: @NO};
+        [standardUserDefaults registerDefaults:appDefaults];
+        NSString *dateKey    = @"dateKey";
+        //Remove old, outdated date key
+        [standardUserDefaults removeObjectForKey:dateKey];
     }
+    return self;
+    
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+
     [self doDateUpdate];
 
 }
@@ -238,22 +245,27 @@ NSMenuItem *show24HrTimeItem;
     [show24Item setTitle:@"24 HR Time"];
     [show24Item setEnabled:TRUE];
     [show24Item setAction:@selector(togglePreference:)];
+    [show24Item setRepresentedObject:show24HourPreferenceKey];
     
     [showDateItem setTitle:@"Show Date"];
     [showDateItem setEnabled:TRUE];
     [showDateItem setAction:@selector(togglePreference:)];
+    [showDateItem setRepresentedObject:showDatePreferenceKey];
 
     [showSecondsItem setTitle:@"Show Seconds"];
     [showSecondsItem setEnabled:TRUE];
     [showSecondsItem setAction:@selector(togglePreference:)];
+    [showSecondsItem setRepresentedObject:showSecondsPreferenceKey];
     
     [showJulianItem setTitle:@"Show Julian Date"];
     [showJulianItem setEnabled:TRUE];
     [showJulianItem setAction:@selector(togglePreference:)];
+    [showJulianItem setRepresentedObject:showJulianDatePreferenceKey];
 
     [showTimeZoneItem setTitle:@"Show Time Zone"];
     [showTimeZoneItem setEnabled:TRUE];
     [showTimeZoneItem setAction:@selector(togglePreference:)];
+    [showTimeZoneItem setRepresentedObject:showTimeZonePreferenceKey];
     
  //   [changeFontItem setTitle:@"Change Font..."];
   //  [changeFontItem setAction:@selector(showFontMenu:)];
@@ -275,11 +287,11 @@ NSMenuItem *show24HrTimeItem;
     [mainMenu addItem:sep3Item];
 
     // showDateItem
-    BOOL showDate = [self fetchBooleanPreference:@"ShowDate"];
-    BOOL showSeconds = [self fetchBooleanPreference:@"ShowSeconds"];
-    BOOL showJulian = [self fetchBooleanPreference:@"ShowJulianDate"];
-    BOOL showTimeZone = [self fetchBooleanPreference:@"ShowTimeZone"];
-    BOOL show24HrTime = [self fetchBooleanPreference:@"24HRTime"];
+    BOOL showDate = [self fetchBooleanPreference:showDatePreferenceKey];
+    BOOL showSeconds = [self fetchBooleanPreference:showSecondsPreferenceKey];
+    BOOL showJulian = [self fetchBooleanPreference:showJulianDatePreferenceKey];
+    BOOL showTimeZone = [self fetchBooleanPreference:showTimeZonePreferenceKey];
+    BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
     
     // TODO: DRY this up a bit.
     
