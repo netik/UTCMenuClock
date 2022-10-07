@@ -100,10 +100,20 @@ NSMenuItem *show24HrTimeItem;
 /*!
  @brief Copies the current date and time to the pasteboard based on user preferences
  */
-- (void) copyToPasteboard:(NSString *)stringToWrite
-{
+- (void) copyToPasteboard {
     NSString *dateString = [self makeDateString];
-    
+
+    // Set string
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] setString:dateString forType:NSPasteboardTypeString];
+}
+
+/*!
+ @brief Copies the current date and time to the pasteboard as an ISO8601 date
+ */
+- (void) copyIS08601ToPasteboard {
+    NSString *dateString = [self makeISO8601DateString];
+
     // Set string
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] setString:dateString forType:NSPasteboardTypeString];
@@ -117,6 +127,18 @@ NSMenuItem *show24HrTimeItem;
      openURL:[NSURL URLWithString:GITHUB_URL]];
 }
 
+/*!
+ @brief Formats the current date as an ISO8601 date string
+ @return NSString the date as a string
+ */
+- (NSString *) makeISO8601DateString {
+    NSDate* date = [NSDate date];
+    NSISO8601DateFormatter* UTCiso = [[[NSISO8601DateFormatter alloc] init] autorelease];
+    NSTimeZone* UTCtz = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+    [UTCiso setTimeZone: UTCtz];
+    return [UTCiso stringFromDate: date];
+    
+}
 /*!
  @brief Formats the current date based on the user's preferences
  @return NSString the date as a string
@@ -267,6 +289,7 @@ NSMenuItem *show24HrTimeItem;
     NSMenuItem *cp3Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *quitItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *copyItem = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *copy2Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *launchItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showDateItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *show24Item = [[[NSMenuItem alloc] init] autorelease];
@@ -275,20 +298,24 @@ NSMenuItem *show24HrTimeItem;
     //   NSMenuItem *changeFontItem = [[[NSMenuItem alloc] init] autorelease];
     
     showTimeZoneItem = [[[NSMenuItem alloc] init] autorelease];
+
+    // Every menu separator must be it's own element.
     NSMenuItem *sep1Item = [NSMenuItem separatorItem];
     NSMenuItem *sep2Item = [NSMenuItem separatorItem];
     NSMenuItem *sep3Item = [NSMenuItem separatorItem];
     NSMenuItem *sep4Item = [NSMenuItem separatorItem];
-    
+    NSMenuItem *sep5Item = [NSMenuItem separatorItem];
+
+    // Build all of the individual elements in the menu
     [mainItem setTitle:@""];
-    
-    [cp1Item setTitle:@"UTC Menu Clock v1.2.3"];
-    [cp2Item setTitle:@"jna@retina.net"];
-    [cp3Item setTitle:@"http://github.com/netik/UTCMenuClock"];
     
     [copyItem setTitle:@"Copy"];
     [copyItem setEnabled:TRUE];
-    [copyItem setAction:@selector(copyToPasteboard:)];
+    [copyItem setAction:@selector(copyToPasteboard)];
+    
+    [copy2Item setTitle:@"Copy as ISO-8601"];
+    [copy2Item setEnabled:TRUE];
+    [copy2Item setAction:@selector(copyIS08601ToPasteboard)];
     
     [cp3Item setEnabled:TRUE];
     [cp3Item setAction:@selector(openGithubURL:)];
@@ -329,20 +356,22 @@ NSMenuItem *show24HrTimeItem;
     [quitItem setEnabled:TRUE];
     [quitItem setAction:@selector(quitProgram:)];
     
+    // promo junk (menu bottom)
+    [cp1Item setTitle:@"UTC Menu Clock v1.2.3"];
+    [cp2Item setTitle:@"jna@retina.net"];
+    [cp3Item setTitle:@"http://github.com/netik/UTCMenuClock"];
+    
+    // the full menu gets built here.
     [mainMenu addItem:mainItem];
     // "---"
-    [mainMenu addItem:sep2Item];
-    // "---"
-    [mainMenu addItem:cp1Item];
-    [mainMenu addItem:cp2Item];
-    // "---"
     [mainMenu addItem:sep1Item];
-    [mainMenu addItem:cp3Item];
-    // "---"
-    [mainMenu addItem:sep3Item];
+    // Copy section
     [mainMenu addItem:copyItem];
-    
-    // showDateItem
+    [mainMenu addItem:copy2Item];
+    // "---"
+    [mainMenu addItem:sep2Item];
+
+    // Preferences area
     BOOL showDate = [self fetchBooleanPreference:showDatePreferenceKey];
     BOOL showSeconds = [self fetchBooleanPreference:showSecondsPreferenceKey];
     BOOL showJulian = [self fetchBooleanPreference:showJulianDatePreferenceKey];
@@ -400,18 +429,25 @@ NSMenuItem *show24HrTimeItem;
     [mainMenu addItem:showTimeZoneItem];
     //  [mainMenu addItem:changeFontItem];
     // "---"
-    [mainMenu addItem:sep4Item];
+    [mainMenu addItem:sep3Item];
     [mainMenu addItem:quitItem];
     
+    // promo stuff
+    [mainMenu addItem:sep4Item];
+    // "---"
+    [mainMenu addItem:cp1Item];
+    [mainMenu addItem:cp2Item];
+    [mainMenu addItem:sep5Item];
+    [mainMenu addItem:cp3Item];
+
     [theItem setMenu:(NSMenu *)mainMenu];
     
-    // Update the date immediately after setup so that there is no timer lag
+    // Update the date immediately after our setup so that there is no timer lag
     [self doDateUpdate];
     
+    // Schedule the timer
     NSNumber *myInt = [NSNumber numberWithInt:1];
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fireTimer:) userInfo:myInt repeats:YES];
-    
-    
 }
 
 @end
