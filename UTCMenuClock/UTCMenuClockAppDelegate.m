@@ -4,7 +4,8 @@
 //
 // Created by John Adams on 11/14/11.
 //
-// Copyright 2011-2016 John Adams
+// Copyright 2011-2022 John Adams <jna@retina.net>
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -27,6 +28,9 @@ static NSString *const showJulianDatePreferenceKey = @"ShowJulianDate";
 static NSString *const showTimeZonePreferenceKey = @"ShowTimeZone";
 static NSString *const show24HourPreferenceKey = @"24HRTime";
 
+/* Some app constants go here */
+static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
+
 @implementation UTCMenuClockAppDelegate
 
 @synthesize window;
@@ -37,15 +41,21 @@ NSMenuItem *dateMenuItem;
 NSMenuItem *showTimeZoneItem;
 NSMenuItem *show24HrTimeItem;
 
+/*!
+ @brief Exits the app
+ */
 - (void) quitProgram:(id)sender {
     // Cleanup here if necessary...
     [[NSApplication sharedApplication] terminate:nil];
 }
 
+/*!
+ @brief Flips the user preference that starts the application at launch.
+ */
 - (void) toggleLaunch:(id)sender {
     NSInteger state = [sender state];
     LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
-
+    
     if (state == NSOffState) {
         [sender setState:NSOnState];
         [launchController setLaunchAtLogin:YES];
@@ -53,21 +63,30 @@ NSMenuItem *show24HrTimeItem;
         [sender setState:NSOffState];
         [launchController setLaunchAtLogin:NO];
     }
-
+    
     [launchController release];
 }
 
+/*!
+ @brief Returns a preference's setting based on the key
+ @param preference The preference to retrieve as an NSString
+ @return boolean from the preference list
+ */
 - (BOOL) fetchBooleanPreference:(NSString *)preference {
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     BOOL value = [standardUserDefaults boolForKey:preference];
     return value;
 }
 
+/*!
+ @brief Flips the user preference that starts the application at launch.
+ @param sender The menu component to change
+ */
 - (void) togglePreference:(id)sender {
     NSInteger state = [sender state];
     NSString *preference = [sender representedObject];
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-
+    
     if (state == NSOffState) {
         [sender setState:NSOnState];
         [standardUserDefaults setBool:TRUE forKey:preference];
@@ -75,17 +94,34 @@ NSMenuItem *show24HrTimeItem;
         [sender setState:NSOffState];
         [standardUserDefaults setBool:FALSE forKey:preference];
     }
-
+    
 }
 
+/*!
+ @brief Copies the current date and time to the pasteboard based on user preferences
+ */
+- (void) copyToPasteboard:(NSString *)stringToWrite
+{
+    NSString *dateString = [self makeDateString];
+    
+    // Set string
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] setString:dateString forType:NSPasteboardTypeString];
+}
+
+/*!
+ @brief Opens the github URL in the default Browser where the source code lives
+ */
 - (void) openGithubURL:(id)sender {
     [[NSWorkspace sharedWorkspace]
-        openURL:[NSURL URLWithString:@"http://github.com/netik/UTCMenuClock"]];
+     openURL:[NSURL URLWithString:GITHUB_URL]];
 }
 
-
-- (void) doDateUpdate {
-
+/*!
+ @brief Formats the current date based on the user's preferences
+ @return NSString the date as a string
+ */
+- (NSString *) makeDateString {
     NSDate* date = [NSDate date];
     NSDateFormatter* UTCdf = [[[NSDateFormatter alloc] init] autorelease];
     NSDateFormatter* UTCdateDF = [[[NSDateFormatter alloc] init] autorelease];
@@ -93,12 +129,12 @@ NSMenuItem *show24HrTimeItem;
     NSDateFormatter* UTCdaynum = [[[NSDateFormatter alloc] init] autorelease];
     
     NSTimeZone* UTCtz = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
-
+    
     [UTCdf setTimeZone: UTCtz];
     [UTCdateDF setTimeZone: UTCtz];
     [UTCdateShortDF setTimeZone: UTCtz];
     [UTCdaynum setTimeZone: UTCtz];
-
+    
     BOOL showDate = [self fetchBooleanPreference:showDatePreferenceKey];
     BOOL showSeconds = [self fetchBooleanPreference:showSecondsPreferenceKey];
     BOOL showJulian = [self fetchBooleanPreference:showJulianDatePreferenceKey];
@@ -121,7 +157,7 @@ NSMenuItem *show24HrTimeItem;
     [UTCdateDF setDateStyle:NSDateFormatterFullStyle];
     [UTCdateShortDF setDateStyle:NSDateFormatterShortStyle];
     [UTCdaynum setDateFormat:@"D/"];
-
+    
     NSString* UTCtimepart = [UTCdf stringFromDate: date];
     NSString* UTCdatepart = [UTCdateDF stringFromDate: date];
     NSString* UTCdateShort = [UTCdateShortDF stringFromDate: date];
@@ -129,28 +165,39 @@ NSMenuItem *show24HrTimeItem;
     NSString* UTCTzString;
     
     
-    if (showJulian) { 
+    if (showJulian) {
         UTCJulianDay = [UTCdaynum stringFromDate: date];
-    } else { 
+    } else {
         UTCJulianDay = @"";
     }
     
-    if (showTimeZone) { 
+    if (showTimeZone) {
         UTCTzString = @" UTC";
-    } else { 
+    } else {
         UTCTzString = @"";
     }
-
-    if (showDate) {
-        [ourStatus setTitle:[NSString stringWithFormat:@"%@ %@%@%@", UTCdateShort, UTCJulianDay, UTCtimepart, UTCTzString]];
-    } else {
-        [ourStatus setTitle:[NSString stringWithFormat:@"%@%@%@", UTCJulianDay, UTCtimepart, UTCTzString]];
-    }
-
+    
+    // a side effect of this function is that we also update the menu with the proper UTC date.
     [dateMenuItem setTitle:UTCdatepart];
-
+    
+    if (showDate) {
+        return [NSString stringWithFormat:@"%@ %@%@%@", UTCdateShort, UTCJulianDay, UTCtimepart, UTCTzString];
+    } else {
+        return [NSString stringWithFormat:@"%@%@%@", UTCJulianDay, UTCtimepart, UTCTzString];
+    }
+    
 }
 
+/*!
+ @brief updates the date in the menu bar
+ */
+- (void) doDateUpdate {
+    NSString *dateString = [self makeDateString];
+    [ourStatus setTitle:dateString];
+    
+}
+
+// Unused for now... need to finish.
 - (IBAction)showFontMenu:(id)sender {
     NSFontManager *fontManager = [NSFontManager sharedFontManager];
     [fontManager setDelegate:self];
@@ -158,7 +205,10 @@ NSMenuItem *show24HrTimeItem;
     NSFontPanel *fontPanel = [fontManager fontPanel:YES];
     [fontPanel makeKeyAndOrderFront:sender];
 }
-// this is the main work loop, fired on 1s intervals.
+
+/*!
+ @brief Fires every one second to update the clock
+ */
 - (void) fireTimer:(NSTimer*)theTimer {
     [self doDateUpdate];
 }
@@ -183,15 +233,15 @@ NSMenuItem *show24HrTimeItem;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-
+    
     [self doDateUpdate];
-
+    
 }
 
 - (void)awakeFromNib
 {
     mainMenu = [[NSMenu alloc] init];
-
+    
     //Create Image for menu item
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     NSStatusItem *theItem;
@@ -199,29 +249,30 @@ NSMenuItem *show24HrTimeItem;
     [theItem retain];
     // retain a reference to the item so we don't have to find it again
     ourStatus = theItem;
-
+    
     //Set Image
     //[theItem setImage:(NSImage *)menuicon];
     [theItem setTitle:@""];
-
+    
     //Make it turn blue when you click on it
     [theItem setHighlightMode:YES];
     [theItem setEnabled: YES];
-
+    
     // build the menu
     NSMenuItem *mainItem = [[NSMenuItem alloc] init];
     dateMenuItem = mainItem;
-
+    
     NSMenuItem *cp1Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *cp2Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *cp3Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *quitItem = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *copyItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *launchItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showDateItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *show24Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showSecondsItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *showJulianItem = [[[NSMenuItem alloc] init] autorelease];
- //   NSMenuItem *changeFontItem = [[[NSMenuItem alloc] init] autorelease];
+    //   NSMenuItem *changeFontItem = [[[NSMenuItem alloc] init] autorelease];
     
     showTimeZoneItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *sep1Item = [NSMenuItem separatorItem];
@@ -230,18 +281,22 @@ NSMenuItem *show24HrTimeItem;
     NSMenuItem *sep4Item = [NSMenuItem separatorItem];
     
     [mainItem setTitle:@""];
-
+    
     [cp1Item setTitle:@"UTC Menu Clock v1.2.3"];
     [cp2Item setTitle:@"jna@retina.net"];
     [cp3Item setTitle:@"http://github.com/netik/UTCMenuClock"];
-
+    
+    [copyItem setTitle:@"Copy"];
+    [copyItem setEnabled:TRUE];
+    [copyItem setAction:@selector(copyToPasteboard:)];
+    
     [cp3Item setEnabled:TRUE];
     [cp3Item setAction:@selector(openGithubURL:)];
-
+    
     [launchItem setTitle:@"Open at Login"];
     [launchItem setEnabled:TRUE];
     [launchItem setAction:@selector(toggleLaunch:)];
-
+    
     [show24Item setTitle:@"24 HR Time"];
     [show24Item setEnabled:TRUE];
     [show24Item setAction:@selector(togglePreference:)];
@@ -251,7 +306,7 @@ NSMenuItem *show24HrTimeItem;
     [showDateItem setEnabled:TRUE];
     [showDateItem setAction:@selector(togglePreference:)];
     [showDateItem setRepresentedObject:showDatePreferenceKey];
-
+    
     [showSecondsItem setTitle:@"Show Seconds"];
     [showSecondsItem setEnabled:TRUE];
     [showSecondsItem setAction:@selector(togglePreference:)];
@@ -261,19 +316,19 @@ NSMenuItem *show24HrTimeItem;
     [showJulianItem setEnabled:TRUE];
     [showJulianItem setAction:@selector(togglePreference:)];
     [showJulianItem setRepresentedObject:showJulianDatePreferenceKey];
-
+    
     [showTimeZoneItem setTitle:@"Show Time Zone"];
     [showTimeZoneItem setEnabled:TRUE];
     [showTimeZoneItem setAction:@selector(togglePreference:)];
     [showTimeZoneItem setRepresentedObject:showTimeZonePreferenceKey];
     
- //   [changeFontItem setTitle:@"Change Font..."];
-  //  [changeFontItem setAction:@selector(showFontMenu:)];
+    //   [changeFontItem setTitle:@"Change Font..."];
+    //  [changeFontItem setAction:@selector(showFontMenu:)];
     
     [quitItem setTitle:@"Quit"];
     [quitItem setEnabled:TRUE];
     [quitItem setAction:@selector(quitProgram:)];
-
+    
     [mainMenu addItem:mainItem];
     // "---"
     [mainMenu addItem:sep2Item];
@@ -285,7 +340,8 @@ NSMenuItem *show24HrTimeItem;
     [mainMenu addItem:cp3Item];
     // "---"
     [mainMenu addItem:sep3Item];
-
+    [mainMenu addItem:copyItem];
+    
     // showDateItem
     BOOL showDate = [self fetchBooleanPreference:showDatePreferenceKey];
     BOOL showSeconds = [self fetchBooleanPreference:showSecondsPreferenceKey];
@@ -306,13 +362,13 @@ NSMenuItem *show24HrTimeItem;
     } else {
         [showDateItem setState:NSOffState];
     }
-
+    
     if (showSeconds) {
         [showSecondsItem setState:NSOnState];
     } else {
         [showSecondsItem setState:NSOffState];
     }
-
+    
     if (showJulian) {
         [showJulianItem setState:NSOnState];
     } else {
@@ -329,33 +385,33 @@ NSMenuItem *show24HrTimeItem;
     LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
     BOOL launch = [launchController launchAtLogin];
     [launchController release];
-
+    
     if (launch) {
         [launchItem setState:NSOnState];
     } else {
         [launchItem setState:NSOffState];
     }
-
+    
     [mainMenu addItem:launchItem];
     [mainMenu addItem:show24Item];
     [mainMenu addItem:showDateItem];
     [mainMenu addItem:showSecondsItem];
     [mainMenu addItem:showJulianItem];
     [mainMenu addItem:showTimeZoneItem];
-  //  [mainMenu addItem:changeFontItem];
+    //  [mainMenu addItem:changeFontItem];
     // "---"
     [mainMenu addItem:sep4Item];
     [mainMenu addItem:quitItem];
-
+    
     [theItem setMenu:(NSMenu *)mainMenu];
-
+    
     // Update the date immediately after setup so that there is no timer lag
     [self doDateUpdate];
-
+    
     NSNumber *myInt = [NSNumber numberWithInt:1];
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fireTimer:) userInfo:myInt repeats:YES];
-
-
+    
+    
 }
 
 @end
