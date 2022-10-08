@@ -200,6 +200,10 @@ NSMenuItem *showTimeZoneItem;
     BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
     BOOL showISO8601 = [self fetchBooleanPreference:showISO8601PreferenceKey];
 
+    // a side effect of this function is that we also update the menu with the proper UTC date.
+    NSString* UTCdatepart = [UTCdateDF stringFromDate: date];
+    [dateMenuItem setTitle:UTCdatepart];
+    
     // showISO8601 overrides everything...
     if (showISO8601) {
         NSString *dateString = [self makeISO8601DateString];
@@ -228,8 +232,7 @@ NSMenuItem *showTimeZoneItem;
     NSString* UTCdateShort = [UTCdateShortDF stringFromDate: date];
     NSString* UTCJulianDay;
     NSString* UTCTzString;
-    
-    
+        
     if (showJulian) {
         UTCJulianDay = [UTCdaynum stringFromDate: date];
     } else {
@@ -241,9 +244,6 @@ NSMenuItem *showTimeZoneItem;
     } else {
         UTCTzString = @"";
     }
-    
-    // a side effect of this function is that we also update the menu with the proper UTC date.
-    [dateMenuItem setTitle:UTCdatepart];
     
     if (showDate) {
         return [NSString stringWithFormat:@"%@ %@%@%@", UTCdateShort, UTCJulianDay, UTCtimepart, UTCTzString];
@@ -413,9 +413,12 @@ NSMenuItem *showTimeZoneItem;
     
     // promo junk (menu bottom)
     [cp1Item setTitle:@"UTC Menu Clock v1.3"];
+    [cp1Item setEnabled:FALSE];
     [cp2Item setTitle:@"jna@retina.net"];
+    [cp2Item setEnabled:FALSE];
     [cp3Item setTitle:@"http://github.com/netik/UTCMenuClock"];
-    
+    [cp3Item setEnabled:FALSE];
+
     // the full menu gets built here.
     [mainMenu addItem:mainItem];
     // "---"
