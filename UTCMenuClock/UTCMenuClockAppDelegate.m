@@ -228,7 +228,6 @@ NSMenuItem *showTimeZoneItem;
     [UTCdaynum setDateFormat:@"D/"];
     
     NSString* UTCtimepart = [UTCdf stringFromDate: date];
-    NSString* UTCdatepart = [UTCdateDF stringFromDate: date];
     NSString* UTCdateShort = [UTCdateShortDF stringFromDate: date];
     NSString* UTCJulianDay;
     NSString* UTCTzString;
