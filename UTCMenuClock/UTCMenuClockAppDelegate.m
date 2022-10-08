@@ -436,7 +436,8 @@ NSMenuItem *showTimeZoneItem;
     BOOL showJulian = [self fetchBooleanPreference:showJulianDatePreferenceKey];
     BOOL showTimeZone = [self fetchBooleanPreference:showTimeZonePreferenceKey];
     BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
-    
+    BOOL showISOInstead = [self fetchBooleanPreference:showISO8601PreferenceKey];
+
     // TODO: DRY this up a bit.
     if (show24HrTime) {
         [show24Item setState:NSOnState];
@@ -466,6 +467,27 @@ NSMenuItem *showTimeZoneItem;
         [showTimeZoneItem setState:NSOnState];
     } else {
         [showTimeZoneItem setState:NSOffState];
+    }
+    
+    if (showISOInstead) {
+        [showISO8601Item setState:NSOnState];
+        
+        // disable all of the menu items which are not related to ISO state
+        [show24Item setEnabled:FALSE];
+        [showDateItem setEnabled:FALSE];
+        [showSecondsItem setEnabled:FALSE];
+        [showJulianItem setEnabled:FALSE];
+        [showTimeZoneItem setEnabled:FALSE];
+    
+    } else {
+        [showISO8601Item setState:NSOffState];
+
+        // enable all of the menu items which are not related to ISO state
+        [show24Item setEnabled:TRUE];
+        [showDateItem setEnabled:TRUE];
+        [showSecondsItem setEnabled:TRUE];
+        [showJulianItem setEnabled:TRUE];
+        [showTimeZoneItem setEnabled:TRUE];
     }
     
     // latsly, deal with Launch at Login
