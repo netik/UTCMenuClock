@@ -27,6 +27,7 @@ static NSString *const showSecondsPreferenceKey = @"ShowSeconds";
 static NSString *const showJulianDatePreferenceKey = @"ShowJulianDate";
 static NSString *const showTimeZonePreferenceKey = @"ShowTimeZone";
 static NSString *const show24HourPreferenceKey = @"24HRTime";
+static NSString *const showISO8601PreferenceKey = @"ISO8601";
 
 /* Some app constants go here */
 static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
@@ -37,9 +38,15 @@ static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
 @synthesize mainMenu;
 
 NSStatusItem *ourStatus;
+
+// make this global so other functions can manipulate menu elemenst.
 NSMenuItem *dateMenuItem;
 NSMenuItem *showTimeZoneItem;
-NSMenuItem *show24HrTimeItem;
+NSMenuItem *show24Item;
+NSMenuItem *showDateItem;
+NSMenuItem *showSecondsItem;
+NSMenuItem *showJulianItem;
+NSMenuItem *showTimeZoneItem;
 
 /*!
  @brief Exits the app
@@ -96,6 +103,35 @@ NSMenuItem *show24HrTimeItem;
     }
     
 }
+
+/*!
+ @brief Flips the user preference that starts the application at launch.
+ @param sender The menu component to change
+ */
+- (void) toggleISOPreference:(id)sender {
+    NSInteger state = [sender state];
+    
+    [self togglePreference:sender];
+    
+    if (state == NSOffState) {
+        // disable all of the menu items which are not related to ISO state
+        [show24Item setEnabled:FALSE];
+        [showDateItem setEnabled:FALSE];
+        [showSecondsItem setEnabled:FALSE];
+        [showJulianItem setEnabled:FALSE];
+        [showTimeZoneItem setEnabled:FALSE];
+
+    } else {
+        // enable all of the menu items which are not related to ISO state
+        [show24Item setEnabled:TRUE];
+        [showDateItem setEnabled:TRUE];
+        [showSecondsItem setEnabled:TRUE];
+        [showJulianItem setEnabled:TRUE];
+        [showTimeZoneItem setEnabled:TRUE];
+    }
+    
+}
+
 
 /*!
  @brief Copies the current date and time to the pasteboard based on user preferences
@@ -162,6 +198,13 @@ NSMenuItem *show24HrTimeItem;
     BOOL showJulian = [self fetchBooleanPreference:showJulianDatePreferenceKey];
     BOOL showTimeZone = [self fetchBooleanPreference:showTimeZonePreferenceKey];
     BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
+    BOOL showISO8601 = [self fetchBooleanPreference:showISO8601PreferenceKey];
+
+    // showISO8601 overrides everything...
+    if (showISO8601) {
+        NSString *dateString = [self makeISO8601DateString];
+        return dateString;
+    }
     
     if (showSeconds) {
         if (show24HrTime){
@@ -263,6 +306,9 @@ NSMenuItem *show24HrTimeItem;
 - (void)awakeFromNib
 {
     mainMenu = [[NSMenu alloc] init];
+    // Disable auto enable
+    [mainMenu setAutoenablesItems:NO];
+
     
     //Create Image for menu item
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
@@ -291,13 +337,17 @@ NSMenuItem *show24HrTimeItem;
     NSMenuItem *copyItem = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *copy2Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *launchItem = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *showDateItem = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *show24Item = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *showSecondsItem = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *showJulianItem = [[[NSMenuItem alloc] init] autorelease];
-    //   NSMenuItem *changeFontItem = [[[NSMenuItem alloc] init] autorelease];
-    
+    NSMenuItem *showISO8601Item = [[[NSMenuItem alloc] init] autorelease];
+
+    // date specific items
+    showDateItem = [[[NSMenuItem alloc] init] autorelease];
+    show24Item = [[[NSMenuItem alloc] init] autorelease];
+    showSecondsItem = [[[NSMenuItem alloc] init] autorelease];
+    showJulianItem = [[[NSMenuItem alloc] init] autorelease];
     showTimeZoneItem = [[[NSMenuItem alloc] init] autorelease];
+
+
+    //   NSMenuItem *changeFontItem = [[[NSMenuItem alloc] init] autorelease];
 
     // Every menu separator must be it's own element.
     NSMenuItem *sep1Item = [NSMenuItem separatorItem];
@@ -348,6 +398,11 @@ NSMenuItem *show24HrTimeItem;
     [showTimeZoneItem setEnabled:TRUE];
     [showTimeZoneItem setAction:@selector(togglePreference:)];
     [showTimeZoneItem setRepresentedObject:showTimeZonePreferenceKey];
+
+    [showISO8601Item setTitle:@"Show ISO8601 Instead"];
+    [showISO8601Item setEnabled:TRUE];
+    [showISO8601Item setAction:@selector(toggleISOPreference:)];
+    [showISO8601Item setRepresentedObject:showISO8601PreferenceKey];
     
     //   [changeFontItem setTitle:@"Change Font..."];
     //  [changeFontItem setAction:@selector(showFontMenu:)];
@@ -427,6 +482,7 @@ NSMenuItem *show24HrTimeItem;
     [mainMenu addItem:showSecondsItem];
     [mainMenu addItem:showJulianItem];
     [mainMenu addItem:showTimeZoneItem];
+    [mainMenu addItem:showISO8601Item];
     //  [mainMenu addItem:changeFontItem];
     // "---"
     [mainMenu addItem:sep3Item];
