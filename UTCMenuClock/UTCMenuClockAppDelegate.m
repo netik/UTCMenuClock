@@ -201,7 +201,11 @@ NSMenuItem *showTimeZoneItem;
     BOOL showISO8601 = [self fetchBooleanPreference:showISO8601PreferenceKey];
 
     // a side effect of this function is that we also update the menu with the proper UTC date.
+    [UTCdateDF setDateStyle:NSDateFormatterFullStyle];
+    [UTCdateShortDF setDateStyle:NSDateFormatterShortStyle];
+    [UTCdaynum setDateFormat:@"D/"];
     NSString* UTCdatepart = [UTCdateDF stringFromDate: date];
+
     [dateMenuItem setTitle:UTCdatepart];
     
     // showISO8601 overrides everything...
@@ -223,10 +227,7 @@ NSMenuItem *showTimeZoneItem;
             [UTCdf setDateFormat: @"hh:mm a"];
         }
     }
-    [UTCdateDF setDateStyle:NSDateFormatterFullStyle];
-    [UTCdateShortDF setDateStyle:NSDateFormatterShortStyle];
-    [UTCdaynum setDateFormat:@"D/"];
-    
+
     NSString* UTCtimepart = [UTCdf stringFromDate: date];
     NSString* UTCdateShort = [UTCdateShortDF stringFromDate: date];
     NSString* UTCJulianDay;
@@ -305,10 +306,10 @@ NSMenuItem *showTimeZoneItem;
 - (void)awakeFromNib
 {
     mainMenu = [[NSMenu alloc] init];
+
     // Disable auto enable
     [mainMenu setAutoenablesItems:NO];
 
-    
     //Create Image for menu item
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     NSStatusItem *theItem;
@@ -328,6 +329,7 @@ NSMenuItem *showTimeZoneItem;
     // build the menu
     NSMenuItem *mainItem = [[NSMenuItem alloc] init];
     dateMenuItem = mainItem;
+    [mainItem setEnabled: NO];
     
     NSMenuItem *cp1Item = [[[NSMenuItem alloc] init] autorelease];
     NSMenuItem *cp2Item = [[[NSMenuItem alloc] init] autorelease];
@@ -436,7 +438,6 @@ NSMenuItem *showTimeZoneItem;
     BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
     
     // TODO: DRY this up a bit.
-    
     if (show24HrTime) {
         [show24Item setState:NSOnState];
     } else {
