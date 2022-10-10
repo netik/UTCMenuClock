@@ -39,7 +39,7 @@ static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
 
 NSStatusItem *ourStatus;
 
-// make this global so other functions can manipulate menu elemenst.
+// make this global so other functions can manipulate menu elements.
 NSMenuItem *dateMenuItem;
 NSMenuItem *showTimeZoneItem;
 NSMenuItem *show24Item;
@@ -298,11 +298,12 @@ NSMenuItem *showTimeZoneItem;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    
     [self doDateUpdate];
-    
 }
 
+/*!
+ @brief Runs right after the nib loads
+*/
 - (void)awakeFromNib
 {
     mainMenu = [[NSMenu alloc] init];
@@ -438,36 +439,12 @@ NSMenuItem *showTimeZoneItem;
     BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
     BOOL showISOInstead = [self fetchBooleanPreference:showISO8601PreferenceKey];
 
-    // TODO: DRY this up a bit.
-    if (show24HrTime) {
-        [show24Item setState:NSOnState];
-    } else {
-        [show24Item setState:NSOffState];
-    }
-    
-    if (showDate) {
-        [showDateItem setState:NSOnState];
-    } else {
-        [showDateItem setState:NSOffState];
-    }
-    
-    if (showSeconds) {
-        [showSecondsItem setState:NSOnState];
-    } else {
-        [showSecondsItem setState:NSOffState];
-    }
-    
-    if (showJulian) {
-        [showJulianItem setState:NSOnState];
-    } else {
-        [showJulianItem setState:NSOffState];
-    }
-    
-    if (showTimeZone) {
-        [showTimeZoneItem setState:NSOnState];
-    } else {
-        [showTimeZoneItem setState:NSOffState];
-    }
+    // set the menu states based on the preferences
+    [show24Item setState:show24HrTime ? NSOnState : NSOffState];
+    [showDateItem setState:showDate ? NSOnState : NSOffState];
+    [showSecondsItem setState:showSeconds ? NSOnState : NSOffState];
+    [showJulianItem setState:showJulian ? NSOnState : NSOffState];
+    [showTimeZoneItem setState:showTimeZone ? NSOnState : NSOffState];
     
     if (showISOInstead) {
         [showISO8601Item setState:NSOnState];
@@ -495,11 +472,7 @@ NSMenuItem *showTimeZoneItem;
     BOOL launch = [launchController launchAtLogin];
     [launchController release];
     
-    if (launch) {
-        [launchItem setState:NSOnState];
-    } else {
-        [launchItem setState:NSOffState];
-    }
+    [launchItem setState:launch ? NSOnState : NSOffState];
     
     [mainMenu addItem:launchItem];
     [mainMenu addItem:show24Item];
