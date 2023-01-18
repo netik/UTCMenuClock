@@ -509,9 +509,15 @@ NSTimer *timer;
     // Update the date immediately
     [self doDateUpdate];
 
-    // Get the current date (without ms)
-    NSDate *startDateTime = [NSDate date];
-    NSDateComponents *startUnits = [[NSCalendar currentCalendar] components: (NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSCalendarUnitHour | NSSecondCalendarUnit | NSMinuteCalendarUnit) fromDate: startDateTime];
+    // Get the current date components (without ms)
+    NSDateComponents *startUnits = [[NSCalendar currentCalendar] components:
+                                    (NSYearCalendarUnit |
+                                     NSMonthCalendarUnit |
+                                     NSDayCalendarUnit |
+                                     NSCalendarUnitHour |
+                                     NSMinuteCalendarUnit |
+                                     NSSecondCalendarUnit)
+                                                                   fromDate: [NSDate date]];
 
     NSTimeInterval interval;
     NSTimeInterval tolerance;
@@ -522,7 +528,6 @@ NSTimer *timer;
         // (Chosen arbitrarily: 100ms of tolerance makes the updates visibly irregular, 50ms looks fine)
         interval = 1.0;
         tolerance = 0.05;
-
     } else {
         // If we're not showing seconds, set the timer to fire the next whole minute then every 60 seconds
         [startUnits setSecond:0];
@@ -536,7 +541,7 @@ NSTimer *timer;
     // Set up wake notifications to reset the timer after sleep
     [self fileNotifications];
 
-    startDateTime = [[NSCalendar currentCalendar] dateFromComponents:startUnits];
+    NSDate *startDateTime = [[NSCalendar currentCalendar] dateFromComponents:startUnits];
     timer = [[NSTimer alloc] initWithFireDate:startDateTime interval:interval target:self selector:@selector(fireTimer:) userInfo:nil repeats:YES];
     timer.tolerance = tolerance;
     
