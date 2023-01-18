@@ -526,10 +526,14 @@ NSTimer *timer;
     if ([self fetchBooleanPreference:showSecondsPreferenceKey]) {
         // Update every 1 second with 50ms of tolerance to allow for CPU sleep
         // (Chosen arbitrarily: 100ms of tolerance makes the updates visibly irregular, 50ms looks fine)
+        
+        // Start at the next whole second
+        [startUnits setSecond:[startUnits second] + 1.0];
+
         interval = 1.0;
         tolerance = 0.05;
     } else {
-        // If we're not showing seconds, set the timer to fire the next whole minute then every 60 seconds
+        // If we're not showing seconds, set the timer to fire at the next whole minute then every 60 seconds
         [startUnits setSecond:0];
         [startUnits setMinute:[startUnits minute] + 1.0];
         
