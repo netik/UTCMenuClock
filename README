@@ -4,7 +4,7 @@ work on uses UTC Time exclusively for all of our devices. Converting
 in my head was a true pain.
 
 You can download binaries here: 
-https://github.com/netik/UTCMenuClock/downloads
+https://github.com/netik/UTCMenuClock/tree/master/downloads
 
 The binaries are not signed. I don't have an Apple Developer account
 right now, so you should read this: 
