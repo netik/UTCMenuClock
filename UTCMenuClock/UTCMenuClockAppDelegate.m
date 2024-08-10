@@ -258,14 +258,12 @@ NSMenuItem *showTimeZoneItem;
  */
 - (void) doDateUpdate {
     NSString *dateString = [self makeDateString];
-    [ourStatus setTitle:dateString];
-    
+    ourStatus.button.title = dateString;
 }
 
 // Unused for now... need to finish.
 - (IBAction)showFontMenu:(id)sender {
     NSFontManager *fontManager = [NSFontManager sharedFontManager];
-    [fontManager setDelegate:self];
     
     NSFontPanel *fontPanel = [fontManager fontPanel:YES];
     [fontPanel makeKeyAndOrderFront:sender];
@@ -318,14 +316,6 @@ NSMenuItem *showTimeZoneItem;
     [theItem retain];
     // retain a reference to the item so we don't have to find it again
     ourStatus = theItem;
-    
-    //Set Image
-    //[theItem setImage:(NSImage *)menuicon];
-    [theItem setTitle:@""];
-    
-    //Make it turn blue when you click on it
-    [theItem setHighlightMode:YES];
-    [theItem setEnabled: YES];
     
     // build the menu
     NSMenuItem *mainItem = [[NSMenuItem alloc] init];
