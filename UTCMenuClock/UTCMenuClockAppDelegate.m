@@ -63,11 +63,11 @@ NSMenuItem *showTimeZoneItem;
     NSInteger state = [sender state];
     LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
     
-    if (state == NSOffState) {
-        [sender setState:NSOnState];
+    if (state == NSControlStateValueOff) {
+        [sender setState:NSControlStateValueOn];
         [launchController setLaunchAtLogin:YES];
     } else {
-        [sender setState:NSOffState];
+        [sender setState:NSControlStateValueOff];
         [launchController setLaunchAtLogin:NO];
     }
     
@@ -94,11 +94,11 @@ NSMenuItem *showTimeZoneItem;
     NSString *preference = [sender representedObject];
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    if (state == NSOffState) {
-        [sender setState:NSOnState];
+    if (state == NSControlStateValueOff) {
+        [sender setState:NSControlStateValueOn];
         [standardUserDefaults setBool:TRUE forKey:preference];
     } else {
-        [sender setState:NSOffState];
+        [sender setState:NSControlStateValueOff];
         [standardUserDefaults setBool:FALSE forKey:preference];
     }
     
@@ -113,7 +113,7 @@ NSMenuItem *showTimeZoneItem;
     
     [self togglePreference:sender];
     
-    if (state == NSOffState) {
+    if (state == NSControlStateValueOff) {
         // disable all of the menu items which are not related to ISO state
         [show24Item setEnabled:FALSE];
         [showDateItem setEnabled:FALSE];
@@ -440,14 +440,14 @@ NSMenuItem *showTimeZoneItem;
     BOOL showISOInstead = [self fetchBooleanPreference:showISO8601PreferenceKey];
 
     // set the menu states based on the preferences
-    [show24Item setState:show24HrTime ? NSOnState : NSOffState];
-    [showDateItem setState:showDate ? NSOnState : NSOffState];
-    [showSecondsItem setState:showSeconds ? NSOnState : NSOffState];
-    [showJulianItem setState:showJulian ? NSOnState : NSOffState];
-    [showTimeZoneItem setState:showTimeZone ? NSOnState : NSOffState];
+    [show24Item setState:show24HrTime ? NSControlStateValueOn : NSControlStateValueOff];
+    [showDateItem setState:showDate ? NSControlStateValueOn : NSControlStateValueOff];
+    [showSecondsItem setState:showSeconds ? NSControlStateValueOn : NSControlStateValueOff];
+    [showJulianItem setState:showJulian ? NSControlStateValueOn : NSControlStateValueOff];
+    [showTimeZoneItem setState:showTimeZone ? NSControlStateValueOn : NSControlStateValueOff];
     
     if (showISOInstead) {
-        [showISO8601Item setState:NSOnState];
+        [showISO8601Item setState:NSControlStateValueOn];
         
         // disable all of the menu items which are not related to ISO state
         [show24Item setEnabled:FALSE];
@@ -457,7 +457,7 @@ NSMenuItem *showTimeZoneItem;
         [showTimeZoneItem setEnabled:FALSE];
     
     } else {
-        [showISO8601Item setState:NSOffState];
+        [showISO8601Item setState:NSControlStateValueOff];
 
         // enable all of the menu items which are not related to ISO state
         [show24Item setEnabled:TRUE];
@@ -472,7 +472,7 @@ NSMenuItem *showTimeZoneItem;
     BOOL launch = [launchController launchAtLogin];
     [launchController release];
     
-    [launchItem setState:launch ? NSOnState : NSOffState];
+    [launchItem setState:launch ? NSControlStateValueOn : NSControlStateValueOff];
     
     [mainMenu addItem:launchItem];
     [mainMenu addItem:show24Item];
