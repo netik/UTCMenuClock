@@ -314,6 +314,9 @@ NSMenuItem *showTimeZoneItem;
     NSStatusItem *theItem;
     theItem = [bar statusItemWithLength:NSVariableStatusItemLength];
     [theItem retain];
+    // while some day we may want more customizable font selection, for now
+    // set the system font to use fixed-width digits
+    theItem.button.font = [NSFont monospacedDigitSystemFontOfSize:NSFont.systemFontSize weight:NSFontWeightRegular];
     // retain a reference to the item so we don't have to find it again
     ourStatus = theItem;
     
