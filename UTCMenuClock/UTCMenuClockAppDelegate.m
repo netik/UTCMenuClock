@@ -48,6 +48,9 @@ NSMenuItem *showSecondsItem;
 NSMenuItem *showJulianItem;
 NSMenuItem *showTimeZoneItem;
 
+// Hold onto the timer to invalidate it if needed
+NSTimer *timer;
+
 /*!
  @brief Exits the app
  */
@@ -101,7 +104,7 @@ NSMenuItem *showTimeZoneItem;
         [sender setState:NSControlStateValueOff];
         [standardUserDefaults setBool:FALSE forKey:preference];
     }
-    
+    [self scheduleTimer];
 }
 
 /*!
@@ -199,7 +202,7 @@ NSMenuItem *showTimeZoneItem;
     BOOL showTimeZone = [self fetchBooleanPreference:showTimeZonePreferenceKey];
     BOOL show24HrTime = [self fetchBooleanPreference:show24HourPreferenceKey];
     BOOL showISO8601 = [self fetchBooleanPreference:showISO8601PreferenceKey];
-
+    
     // a side effect of this function is that we also update the menu with the proper UTC date.
     [UTCdateDF setDateStyle:NSDateFormatterFullStyle];
     [UTCdateShortDF setDateStyle:NSDateFormatterShortStyle];
@@ -270,7 +273,7 @@ NSMenuItem *showTimeZoneItem;
 }
 
 /*!
- @brief Fires every one second to update the clock
+ @brief Fires to update the clock
  */
 - (void) fireTimer:(NSTimer*)theTimer {
     [self doDateUpdate];
@@ -489,12 +492,73 @@ NSMenuItem *showTimeZoneItem;
 
     [theItem setMenu:(NSMenu *)mainMenu];
     
-    // Update the date immediately after our setup so that there is no timer lag
+    [self scheduleTimer];
+}
+
+- (void)scheduleTimer {
+    // Invalidate and dealloc old timer
+    [timer invalidate];
+    timer = nil;
+    
+    // Update the date immediately
     [self doDateUpdate];
+
+    // Get the current date components (without ms)
+    NSDateComponents *startUnits = [[NSCalendar currentCalendar] components:
+                                    (NSYearCalendarUnit |
+                                     NSMonthCalendarUnit |
+                                     NSDayCalendarUnit |
+                                     NSCalendarUnitHour |
+                                     NSMinuteCalendarUnit |
+                                     NSSecondCalendarUnit)
+                                                                   fromDate: [NSDate date]];
+
+    NSTimeInterval interval;
+    NSTimeInterval tolerance;
     
     // Schedule the timer
-    NSNumber *myInt = [NSNumber numberWithInt:1];
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fireTimer:) userInfo:myInt repeats:YES];
+    if ([self fetchBooleanPreference:showSecondsPreferenceKey]) {
+        // Update every 1 second with 50ms of tolerance to allow for CPU sleep
+        // (Chosen arbitrarily: 100ms of tolerance makes the updates visibly irregular, 50ms looks fine)
+        
+        // Start at the next whole second
+        [startUnits setSecond:[startUnits second] + 1.0];
+
+        interval = 1.0;
+        tolerance = 0.05;
+    } else {
+        // If we're not showing seconds, set the timer to fire at the next whole minute then every 60 seconds
+        [startUnits setSecond:0];
+        [startUnits setMinute:[startUnits minute] + 1.0];
+        
+        // Update every 60 seconds with 500ms of tolerance
+        interval = 60.0;
+        tolerance = 0.5;
+    }
+    
+    // Set up wake notifications to reset the timer after sleep
+    [self fileNotifications];
+
+    NSDate *startDateTime = [[NSCalendar currentCalendar] dateFromComponents:startUnits];
+    timer = [[NSTimer alloc] initWithFireDate:startDateTime interval:interval target:self selector:@selector(fireTimer:) userInfo:nil repeats:YES];
+    timer.tolerance = tolerance;
+    
+    // Schedule the timer
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+}
+
+- (void)receiveWakeNote: (NSNotification*) note
+{
+    // When the machine wakes from sleep, reset our timer to make sure we're still running on the second/minute
+    [self scheduleTimer];
+}
+ 
+- (void)fileNotifications
+{
+    // https://developer.apple.com/library/archive/qa/qa1340/_index.html
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
+            selector: @selector(receiveWakeNote:)
+            name: NSWorkspaceDidWakeNotification object: NULL];
 }
 
 @end
