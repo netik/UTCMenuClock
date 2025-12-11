@@ -20,13 +20,26 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface UTCMenuClockAppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow *window;
-    NSMenu *mainMenu;
-    NSStatusItem *statusItem;
-}
+@interface UTCMenuClockAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSMenu *mainMenu;
+// Window outlet (weak - owned by nib)
+@property (weak) IBOutlet NSWindow *window;
+
+// Menu is created programmatically, so we need a strong reference
+@property (strong, nonatomic) NSMenu *mainMenu;
+
+// Status bar item (strong - we own it)
+@property (strong, nonatomic) NSStatusItem *statusItem;
+
+// Timer for clock updates
+@property (strong, nonatomic) NSTimer *timer;
+
+// Menu items that need state management
+@property (strong, nonatomic) NSMenuItem *dateMenuItem;
+@property (strong, nonatomic) NSMenuItem *show24Item;
+@property (strong, nonatomic) NSMenuItem *showDateItem;
+@property (strong, nonatomic) NSMenuItem *showSecondsItem;
+@property (strong, nonatomic) NSMenuItem *showJulianItem;
+@property (strong, nonatomic) NSMenuItem *showTimeZoneItem;
 
 @end

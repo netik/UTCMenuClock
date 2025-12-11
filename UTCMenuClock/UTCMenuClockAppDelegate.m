@@ -4,7 +4,7 @@
 //
 // Created by John Adams on 11/14/11.
 //
-// Copyright 2011-2022 John Adams <jna@retina.net>
+// Copyright 2011-2025 John Adams <jna@retina.net>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,23 +34,6 @@ static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
 
 @implementation UTCMenuClockAppDelegate
 
-@synthesize window;
-@synthesize mainMenu;
-
-NSStatusItem *ourStatus;
-
-// make this global so other functions can manipulate menu elements.
-NSMenuItem *dateMenuItem;
-NSMenuItem *showTimeZoneItem;
-NSMenuItem *show24Item;
-NSMenuItem *showDateItem;
-NSMenuItem *showSecondsItem;
-NSMenuItem *showJulianItem;
-NSMenuItem *showTimeZoneItem;
-
-// Hold onto the timer to invalidate it if needed
-NSTimer *timer;
-
 /*!
  @brief Exits the app
  */
@@ -74,7 +57,6 @@ NSTimer *timer;
         [launchController setLaunchAtLogin:NO];
     }
     
-    [launchController release];
 }
 
 /*!
@@ -99,10 +81,10 @@ NSTimer *timer;
     
     if (state == NSControlStateValueOff) {
         [sender setState:NSControlStateValueOn];
-        [standardUserDefaults setBool:TRUE forKey:preference];
+        [standardUserDefaults setBool:YES forKey:preference];
     } else {
         [sender setState:NSControlStateValueOff];
-        [standardUserDefaults setBool:FALSE forKey:preference];
+        [standardUserDefaults setBool:NO forKey:preference];
     }
     [self scheduleTimer];
 }
@@ -118,19 +100,19 @@ NSTimer *timer;
     
     if (state == NSControlStateValueOff) {
         // disable all of the menu items which are not related to ISO state
-        [show24Item setEnabled:FALSE];
-        [showDateItem setEnabled:FALSE];
-        [showSecondsItem setEnabled:FALSE];
-        [showJulianItem setEnabled:FALSE];
-        [showTimeZoneItem setEnabled:FALSE];
+        [_show24Item setEnabled:NO];
+        [_showDateItem setEnabled:NO];
+        [_showSecondsItem setEnabled:NO];
+        [_showJulianItem setEnabled:NO];
+        [_showTimeZoneItem setEnabled:NO];
 
     } else {
         // enable all of the menu items which are not related to ISO state
-        [show24Item setEnabled:TRUE];
-        [showDateItem setEnabled:TRUE];
-        [showSecondsItem setEnabled:TRUE];
-        [showJulianItem setEnabled:TRUE];
-        [showTimeZoneItem setEnabled:TRUE];
+        [_show24Item setEnabled:YES];
+        [_showDateItem setEnabled:YES];
+        [_showSecondsItem setEnabled:YES];
+        [_showJulianItem setEnabled:YES];
+        [_showTimeZoneItem setEnabled:YES];
     }
     
 }
@@ -172,7 +154,7 @@ NSTimer *timer;
  */
 - (NSString *) makeISO8601DateString {
     NSDate* date = [NSDate date];
-    NSISO8601DateFormatter* UTCiso = [[[NSISO8601DateFormatter alloc] init] autorelease];
+    NSISO8601DateFormatter* UTCiso = [[NSISO8601DateFormatter alloc] init];
     NSTimeZone* UTCtz = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
     [UTCiso setTimeZone: UTCtz];
     return [UTCiso stringFromDate: date];
@@ -184,10 +166,10 @@ NSTimer *timer;
  */
 - (NSString *) makeDateString {
     NSDate* date = [NSDate date];
-    NSDateFormatter* UTCdf = [[[NSDateFormatter alloc] init] autorelease];
-    NSDateFormatter* UTCdateDF = [[[NSDateFormatter alloc] init] autorelease];
-    NSDateFormatter* UTCdateShortDF = [[[NSDateFormatter alloc] init] autorelease];
-    NSDateFormatter* UTCdaynum = [[[NSDateFormatter alloc] init] autorelease];
+    NSDateFormatter* UTCdf = [[NSDateFormatter alloc] init];
+    NSDateFormatter* UTCdateDF = [[NSDateFormatter alloc] init];
+    NSDateFormatter* UTCdateShortDF = [[NSDateFormatter alloc] init];
+    NSDateFormatter* UTCdaynum = [[NSDateFormatter alloc] init];
     
     NSTimeZone* UTCtz = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
     
@@ -209,7 +191,7 @@ NSTimer *timer;
     [UTCdaynum setDateFormat:@"D/"];
     NSString* UTCdatepart = [UTCdateDF stringFromDate: date];
 
-    [dateMenuItem setTitle:UTCdatepart];
+    [_dateMenuItem setTitle:UTCdatepart];
     
     // showISO8601 overrides everything...
     if (showISO8601) {
@@ -261,7 +243,7 @@ NSTimer *timer;
  */
 - (void) doDateUpdate {
     NSString *dateString = [self makeDateString];
-    ourStatus.button.title = dateString;
+    _statusItem.button.title = dateString;
 }
 
 // Unused for now... need to finish.
@@ -307,45 +289,44 @@ NSTimer *timer;
 */
 - (void)awakeFromNib
 {
-    mainMenu = [[NSMenu alloc] init];
+    _mainMenu = [[NSMenu alloc] init];
 
     // Disable auto enable
-    [mainMenu setAutoenablesItems:NO];
+    [_mainMenu setAutoenablesItems:NO];
 
     //Create Image for menu item
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     NSStatusItem *theItem;
     theItem = [bar statusItemWithLength:NSVariableStatusItemLength];
-    [theItem retain];
     // while some day we may want more customizable font selection, for now
     // set the system font to use fixed-width digits
     theItem.button.font = [NSFont monospacedDigitSystemFontOfSize:NSFont.systemFontSize weight:NSFontWeightRegular];
     // retain a reference to the item so we don't have to find it again
-    ourStatus = theItem;
+    _statusItem = theItem;
     
     // build the menu
     NSMenuItem *mainItem = [[NSMenuItem alloc] init];
-    dateMenuItem = mainItem;
-    [mainItem setEnabled: NO];
+    _dateMenuItem = mainItem;
+    [mainItem setEnabled:NO];
     
-    NSMenuItem *cp1Item = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *cp2Item = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *cp3Item = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *quitItem = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *copyItem = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *copy2Item = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *launchItem = [[[NSMenuItem alloc] init] autorelease];
-    NSMenuItem *showISO8601Item = [[[NSMenuItem alloc] init] autorelease];
+    NSMenuItem *cp1Item = [[NSMenuItem alloc] init];
+    NSMenuItem *cp2Item = [[NSMenuItem alloc] init];
+    NSMenuItem *cp3Item = [[NSMenuItem alloc] init];
+    NSMenuItem *quitItem = [[NSMenuItem alloc] init];
+    NSMenuItem *copyItem = [[NSMenuItem alloc] init];
+    NSMenuItem *copy2Item = [[NSMenuItem alloc] init];
+    NSMenuItem *launchItem = [[NSMenuItem alloc] init];
+    NSMenuItem *showISO8601Item = [[NSMenuItem alloc] init];
 
     // date specific items
-    showDateItem = [[[NSMenuItem alloc] init] autorelease];
-    show24Item = [[[NSMenuItem alloc] init] autorelease];
-    showSecondsItem = [[[NSMenuItem alloc] init] autorelease];
-    showJulianItem = [[[NSMenuItem alloc] init] autorelease];
-    showTimeZoneItem = [[[NSMenuItem alloc] init] autorelease];
+    _showDateItem = [[NSMenuItem alloc] init];
+    _show24Item = [[NSMenuItem alloc] init];
+    _showSecondsItem = [[NSMenuItem alloc] init];
+    _showJulianItem = [[NSMenuItem alloc] init];
+    _showTimeZoneItem = [[NSMenuItem alloc] init];
 
 
-    //   NSMenuItem *changeFontItem = [[[NSMenuItem alloc] init] autorelease];
+    //   NSMenuItem *changeFontItem = [[NSMenuItem alloc] init];
 
     // Every menu separator must be it's own element.
     NSMenuItem *sep1Item = [NSMenuItem separatorItem];
@@ -358,47 +339,47 @@ NSTimer *timer;
     [mainItem setTitle:@""];
     
     [copyItem setTitle:@"Copy"];
-    [copyItem setEnabled:TRUE];
+    [copyItem setEnabled:YES];
     [copyItem setAction:@selector(copyToPasteboard)];
     
     [copy2Item setTitle:@"Copy as ISO-8601"];
-    [copy2Item setEnabled:TRUE];
+    [copy2Item setEnabled:YES];
     [copy2Item setAction:@selector(copyIS08601ToPasteboard)];
     
-    [cp3Item setEnabled:TRUE];
+    [cp3Item setEnabled:YES];
     [cp3Item setAction:@selector(openGithubURL:)];
     
     [launchItem setTitle:@"Open at Login"];
-    [launchItem setEnabled:TRUE];
+    [launchItem setEnabled:YES];
     [launchItem setAction:@selector(toggleLaunch:)];
     
-    [show24Item setTitle:@"24 HR Time"];
-    [show24Item setEnabled:TRUE];
-    [show24Item setAction:@selector(togglePreference:)];
-    [show24Item setRepresentedObject:show24HourPreferenceKey];
+    [_show24Item setTitle:@"24 HR Time"];
+    [_show24Item setEnabled:YES];
+    [_show24Item setAction:@selector(togglePreference:)];
+    [_show24Item setRepresentedObject:show24HourPreferenceKey];
     
-    [showDateItem setTitle:@"Show Date"];
-    [showDateItem setEnabled:TRUE];
-    [showDateItem setAction:@selector(togglePreference:)];
-    [showDateItem setRepresentedObject:showDatePreferenceKey];
+    [_showDateItem setTitle:@"Show Date"];
+    [_showDateItem setEnabled:YES];
+    [_showDateItem setAction:@selector(togglePreference:)];
+    [_showDateItem setRepresentedObject:showDatePreferenceKey];
     
-    [showSecondsItem setTitle:@"Show Seconds"];
-    [showSecondsItem setEnabled:TRUE];
-    [showSecondsItem setAction:@selector(togglePreference:)];
-    [showSecondsItem setRepresentedObject:showSecondsPreferenceKey];
+    [_showSecondsItem setTitle:@"Show Seconds"];
+    [_showSecondsItem setEnabled:YES];
+    [_showSecondsItem setAction:@selector(togglePreference:)];
+    [_showSecondsItem setRepresentedObject:showSecondsPreferenceKey];
     
-    [showJulianItem setTitle:@"Show Julian Date"];
-    [showJulianItem setEnabled:TRUE];
-    [showJulianItem setAction:@selector(togglePreference:)];
-    [showJulianItem setRepresentedObject:showJulianDatePreferenceKey];
+    [_showJulianItem setTitle:@"Show Julian Date"];
+    [_showJulianItem setEnabled:YES];
+    [_showJulianItem setAction:@selector(togglePreference:)];
+    [_showJulianItem setRepresentedObject:showJulianDatePreferenceKey];
     
-    [showTimeZoneItem setTitle:@"Show Time Zone"];
-    [showTimeZoneItem setEnabled:TRUE];
-    [showTimeZoneItem setAction:@selector(togglePreference:)];
-    [showTimeZoneItem setRepresentedObject:showTimeZonePreferenceKey];
+    [_showTimeZoneItem setTitle:@"Show Time Zone"];
+    [_showTimeZoneItem setEnabled:YES];
+    [_showTimeZoneItem setAction:@selector(togglePreference:)];
+    [_showTimeZoneItem setRepresentedObject:showTimeZonePreferenceKey];
 
     [showISO8601Item setTitle:@"Show ISO8601 Instead"];
-    [showISO8601Item setEnabled:TRUE];
+    [showISO8601Item setEnabled:YES];
     [showISO8601Item setAction:@selector(toggleISOPreference:)];
     [showISO8601Item setRepresentedObject:showISO8601PreferenceKey];
     
@@ -406,26 +387,26 @@ NSTimer *timer;
     //  [changeFontItem setAction:@selector(showFontMenu:)];
     
     [quitItem setTitle:@"Quit"];
-    [quitItem setEnabled:TRUE];
+    [quitItem setEnabled:YES];
     [quitItem setAction:@selector(quitProgram:)];
     
     // promo junk (menu bottom)
     [cp1Item setTitle:@"UTC Menu Clock v1.3"];
-    [cp1Item setEnabled:FALSE];
+    [cp1Item setEnabled:NO];
     [cp2Item setTitle:@"jna@retina.net"];
-    [cp2Item setEnabled:FALSE];
+    [cp2Item setEnabled:NO];
     [cp3Item setTitle:@"http://github.com/netik/UTCMenuClock"];
-    [cp3Item setEnabled:FALSE];
+    [cp3Item setEnabled:NO];
 
     // the full menu gets built here.
-    [mainMenu addItem:mainItem];
+    [_mainMenu addItem:mainItem];
     // "---"
-    [mainMenu addItem:sep1Item];
+    [_mainMenu addItem:sep1Item];
     // Copy section
-    [mainMenu addItem:copyItem];
-    [mainMenu addItem:copy2Item];
+    [_mainMenu addItem:copyItem];
+    [_mainMenu addItem:copy2Item];
     // "---"
-    [mainMenu addItem:sep2Item];
+    [_mainMenu addItem:sep2Item];
 
     // Preferences area
     BOOL showDate = [self fetchBooleanPreference:showDatePreferenceKey];
@@ -436,81 +417,80 @@ NSTimer *timer;
     BOOL showISOInstead = [self fetchBooleanPreference:showISO8601PreferenceKey];
 
     // set the menu states based on the preferences
-    [show24Item setState:show24HrTime ? NSControlStateValueOn : NSControlStateValueOff];
-    [showDateItem setState:showDate ? NSControlStateValueOn : NSControlStateValueOff];
-    [showSecondsItem setState:showSeconds ? NSControlStateValueOn : NSControlStateValueOff];
-    [showJulianItem setState:showJulian ? NSControlStateValueOn : NSControlStateValueOff];
-    [showTimeZoneItem setState:showTimeZone ? NSControlStateValueOn : NSControlStateValueOff];
+    [_show24Item setState:show24HrTime ? NSControlStateValueOn : NSControlStateValueOff];
+    [_showDateItem setState:showDate ? NSControlStateValueOn : NSControlStateValueOff];
+    [_showSecondsItem setState:showSeconds ? NSControlStateValueOn : NSControlStateValueOff];
+    [_showJulianItem setState:showJulian ? NSControlStateValueOn : NSControlStateValueOff];
+    [_showTimeZoneItem setState:showTimeZone ? NSControlStateValueOn : NSControlStateValueOff];
     
     if (showISOInstead) {
         [showISO8601Item setState:NSControlStateValueOn];
         
         // disable all of the menu items which are not related to ISO state
-        [show24Item setEnabled:FALSE];
-        [showDateItem setEnabled:FALSE];
-        [showSecondsItem setEnabled:FALSE];
-        [showJulianItem setEnabled:FALSE];
-        [showTimeZoneItem setEnabled:FALSE];
+        [_show24Item setEnabled:NO];
+        [_showDateItem setEnabled:NO];
+        [_showSecondsItem setEnabled:NO];
+        [_showJulianItem setEnabled:NO];
+        [_showTimeZoneItem setEnabled:NO];
     
     } else {
         [showISO8601Item setState:NSControlStateValueOff];
 
         // enable all of the menu items which are not related to ISO state
-        [show24Item setEnabled:TRUE];
-        [showDateItem setEnabled:TRUE];
-        [showSecondsItem setEnabled:TRUE];
-        [showJulianItem setEnabled:TRUE];
-        [showTimeZoneItem setEnabled:TRUE];
+        [_show24Item setEnabled:YES];
+        [_showDateItem setEnabled:YES];
+        [_showSecondsItem setEnabled:YES];
+        [_showJulianItem setEnabled:YES];
+        [_showTimeZoneItem setEnabled:YES];
     }
     
-    // latsly, deal with Launch at Login
+    // Lastly, deal with Launch at Login
     LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
     BOOL launch = [launchController launchAtLogin];
-    [launchController release];
     
     [launchItem setState:launch ? NSControlStateValueOn : NSControlStateValueOff];
     
-    [mainMenu addItem:launchItem];
-    [mainMenu addItem:show24Item];
-    [mainMenu addItem:showDateItem];
-    [mainMenu addItem:showSecondsItem];
-    [mainMenu addItem:showJulianItem];
-    [mainMenu addItem:showTimeZoneItem];
-    [mainMenu addItem:showISO8601Item];
-    //  [mainMenu addItem:changeFontItem];
+    [_mainMenu addItem:launchItem];
+    [_mainMenu addItem:_show24Item];
+    [_mainMenu addItem:_showDateItem];
+    [_mainMenu addItem:_showSecondsItem];
+    [_mainMenu addItem:_showJulianItem];
+    [_mainMenu addItem:_showTimeZoneItem];
+    [_mainMenu addItem:showISO8601Item];
+    //  [_mainMenu addItem:changeFontItem];
     // "---"
-    [mainMenu addItem:sep3Item];
-    [mainMenu addItem:quitItem];
+    [_mainMenu addItem:sep3Item];
+    [_mainMenu addItem:quitItem];
     
     // promo stuff
-    [mainMenu addItem:sep4Item];
+    [_mainMenu addItem:sep4Item];
     // "---"
-    [mainMenu addItem:cp1Item];
-    [mainMenu addItem:cp2Item];
-    [mainMenu addItem:sep5Item];
-    [mainMenu addItem:cp3Item];
+    [_mainMenu addItem:cp1Item];
+    [_mainMenu addItem:cp2Item];
+    [_mainMenu addItem:sep5Item];
+    [_mainMenu addItem:cp3Item];
 
-    [theItem setMenu:(NSMenu *)mainMenu];
+    [theItem setMenu:_mainMenu];
     
     [self scheduleTimer];
 }
 
 - (void)scheduleTimer {
     // Invalidate and dealloc old timer
-    [timer invalidate];
-    timer = nil;
+    [_timer invalidate];
+    _timer = nil;
     
     // Update the date immediately
     [self doDateUpdate];
 
     // Get the current date components (without ms)
     NSDateComponents *startUnits = [[NSCalendar currentCalendar] components:
-                                    (NSYearCalendarUnit |
-                                     NSMonthCalendarUnit |
-                                     NSDayCalendarUnit |
+                                    (NSCalendarUnitYear |
+                                     NSCalendarUnitMonth |
+                                     NSCalendarUnitDay |
                                      NSCalendarUnitHour |
-                                     NSMinuteCalendarUnit |
-                                     NSSecondCalendarUnit)
+                                     NSCalendarUnitMinute |
+                                     NSCalendarUnitSecond)
                                                                    fromDate: [NSDate date]];
 
     NSTimeInterval interval;
@@ -540,11 +520,11 @@ NSTimer *timer;
     [self fileNotifications];
 
     NSDate *startDateTime = [[NSCalendar currentCalendar] dateFromComponents:startUnits];
-    timer = [[NSTimer alloc] initWithFireDate:startDateTime interval:interval target:self selector:@selector(fireTimer:) userInfo:nil repeats:YES];
-    timer.tolerance = tolerance;
+    _timer = [[NSTimer alloc] initWithFireDate:startDateTime interval:interval target:self selector:@selector(fireTimer:) userInfo:nil repeats:YES];
+    _timer.tolerance = tolerance;
     
     // Schedule the timer
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 
 - (void)receiveWakeNote: (NSNotification*) note
@@ -558,7 +538,16 @@ NSTimer *timer;
     // https://developer.apple.com/library/archive/qa/qa1340/_index.html
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
             selector: @selector(receiveWakeNote:)
-            name: NSWorkspaceDidWakeNotification object: NULL];
+            name: NSWorkspaceDidWakeNotification object: nil];
+}
+
+- (void)dealloc
+{
+    // Remove notification observer
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    
+    // Invalidate timer (ARC handles the release)
+    [_timer invalidate];
 }
 
 @end

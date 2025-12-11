@@ -1,30 +1,11 @@
 //
 //  LaunchAtLoginController.m
 //
-//  Created by Ben Clark-Robinson on 24/03/10.
-//  Copyright 2010 Ben Clark-Robinson. All rights reserved.
+//  Updated to use SMAppService for macOS 13+ (modern API)
 //
-//  Permission is hereby granted, free of charge, to any person obtaining
-//	a copy of this software and associated documentation files (the
-//																'Software'), to deal in the Software without restriction, including
-//	without limitation the rights to use, copy, modify, merge, publish,
-//	distribute, sublicense, and/or sell copies of the Software, and to
-//	permit persons to whom the Software is furnished to do so, subject to
-//	the following conditions:
-//
-//	The above copyright notice and this permission notice shall be
-//	included in all copies or substantial portions of the Software.
-//
-//	THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-//	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-//	IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-//	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-//	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-//	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "LaunchAtLoginController.h"
-
+#import <ServiceManagement/ServiceManagement.h>
 
 @implementation LaunchAtLoginController
 
@@ -32,76 +13,48 @@
     return [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
 }
 
+/**
+ Returns whether the application is set to launch at login.
+ Uses the modern SMAppService API (macOS 13+).
+ 
+ @return YES if the app will launch at login, NO otherwise.
+ */
 - (BOOL)launchAtLogin {
-    return [self willLaunchAtLogin:[self appURL]];
+    SMAppService *service = [SMAppService mainAppService];
+    return (service.status == SMAppServiceStatusEnabled);
 }
 
-- (BOOL)willLaunchAtLogin:(NSURL *)itemURL {
-    Boolean foundIt=false;
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    if (loginItems) {
-        UInt32 seed = 0U;
-        NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
-        for (id itemObject in currentLoginItems) {
-            LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
-			
-            UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
-            CFURLRef URL = NULL;
-            OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
-            if (err == noErr) {
-                foundIt = CFEqual(URL, itemURL);
-                CFRelease(URL);
-				
-                if (foundIt)
-                    break;
-            }
+/**
+ Sets the application to launch at login or not.
+ Uses the modern SMAppService API (macOS 13+).
+
+ @param itemURL The URL of the application bundle (unused in modern API).
+ @param enabled A boolean indicating whether the application should launch at login.
+ */
+- (void)setLaunchAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled {
+    SMAppService *service = [SMAppService mainAppService];
+    NSError *error = nil;
+    
+    if (enabled) {
+        if (![service registerAndReturnError:&error]) {
+            NSLog(@"Failed to enable launch at login: %@", error.localizedDescription);
         }
-        CFRelease(loginItems);
+    } else {
+        if (![service unregisterAndReturnError:&error]) {
+            NSLog(@"Failed to disable launch at login: %@", error.localizedDescription);
+        }
     }
-    return (BOOL)foundIt;
 }
 
+/**
+ Sets the application to launch at login or not.
+
+ @param enabled A boolean indicating whether the application should launch at login.
+ */
 - (void)setLaunchAtLogin:(BOOL)enabled {
     [self willChangeValueForKey:@"startAtLogin"];
     [self setLaunchAtLogin:[self appURL] enabled:enabled];
     [self didChangeValueForKey:@"startAtLogin"];
 }
-
-
-- (void)setLaunchAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled {
-    LSSharedFileListItemRef existingItem = NULL;
-	
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    if (loginItems) {
-        UInt32 seed = 0U;
-        NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
-        for (id itemObject in currentLoginItems) {
-            LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
-			
-            UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
-            CFURLRef URL = NULL;
-            OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
-            if (err == noErr) {
-                Boolean foundIt = CFEqual(URL, itemURL);
-                CFRelease(URL);
-				
-                if (foundIt) {
-                    existingItem = item;
-                    break;
-                }
-            }
-        }
-		
-        if (enabled && (existingItem == NULL)) {
-            LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst,
-                                          NULL, NULL, (CFURLRef)itemURL, NULL, NULL);
-			
-        } else if (!enabled && (existingItem != NULL))
-            LSSharedFileListItemRemove(loginItems, existingItem);
-		
-        CFRelease(loginItems);
-    }       
-}
-
 
 @end
