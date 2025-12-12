@@ -12,8 +12,8 @@ reliable UTC reference next to the system clock.
 - Copy the current UTC timestamp (using your selected format) to the clipboard.
 - “Open at Login” toggle built into the menu.
 
-## Download a build
-- Grab the unsigned universal binary: `downloads/UTCMenuClock_v1.3_universal.zip`.
+## Download prebuilt binary
+- Grab the unsigned universal binary: [`downloads/UTCMenuClock_v1.4_universal.zip`](https://github.com/netik/UTCMenuClock/blob/master/downloads/UTCMenuClock_v1.4_universal.zip).
 - Because the app is unsigned, macOS will warn on first launch. Use
   `Right Click > Open` to allow it, or permit it under System Settings → Privacy & Security.
 
