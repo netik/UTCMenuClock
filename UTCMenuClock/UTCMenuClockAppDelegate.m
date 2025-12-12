@@ -391,7 +391,7 @@ static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
     [quitItem setAction:@selector(quitProgram:)];
     
     // promo junk (menu bottom)
-    [cp1Item setTitle:@"UTC Menu Clock v1.3"];
+    [cp1Item setTitle:@"UTC Menu Clock v1.4"];
     [cp1Item setEnabled:NO];
     [cp2Item setTitle:@"jna@retina.net"];
     [cp2Item setEnabled:NO];
