@@ -58,6 +58,7 @@
 		A8B119001471EB13008A993B /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		A8B119011471EB13008A993B /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		A8B119021471EB13008A993B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		A8DCEE662EEB9390009EE388 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A8DFE58328F0B2A40048B113 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		DA1B0A0A1822FCFF00C57253 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +89,7 @@
 		A8B1187B1471AE3A008A993B = {
 			isa = PBXGroup;
 			children = (
+				A8DCEE662EEB9390009EE388 /* README.md */,
 				A8B118901471AE3A008A993B /* UTCMenuClock */,
 				A8B118AD1471AE3A008A993B /* UTCMenuClockTests */,
 				A8B118891471AE3A008A993B /* Frameworks */,
