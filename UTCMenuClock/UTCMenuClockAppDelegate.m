@@ -471,8 +471,16 @@ static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
     [_mainMenu addItem:cp3Item];
 
     [theItem setMenu:_mainMenu];
-    
+    [self setupWakeNotifications];
     [self scheduleTimer];
+}
+
+- (void)setupWakeNotifications
+{
+    // https://developer.apple.com/library/archive/qa/qa1340/_index.html
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
+            selector: @selector(receiveWakeNote:)
+            name: NSWorkspaceDidWakeNotification object: nil];
 }
 
 - (void)scheduleTimer {
@@ -516,9 +524,6 @@ static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
         tolerance = 0.5;
     }
     
-    // Set up wake notifications to reset the timer after sleep
-    [self fileNotifications];
-
     NSDate *startDateTime = [[NSCalendar currentCalendar] dateFromComponents:startUnits];
     _timer = [[NSTimer alloc] initWithFireDate:startDateTime interval:interval target:self selector:@selector(fireTimer:) userInfo:nil repeats:YES];
     _timer.tolerance = tolerance;
@@ -531,14 +536,6 @@ static NSString *const GITHUB_URL = @"http://github.com/netik/UTCMenuClock";
 {
     // When the machine wakes from sleep, reset our timer to make sure we're still running on the second/minute
     [self scheduleTimer];
-}
- 
-- (void)fileNotifications
-{
-    // https://developer.apple.com/library/archive/qa/qa1340/_index.html
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
-            selector: @selector(receiveWakeNote:)
-            name: NSWorkspaceDidWakeNotification object: nil];
 }
 
 - (void)dealloc
