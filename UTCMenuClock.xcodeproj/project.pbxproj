@@ -468,6 +468,7 @@
 				INFOPLIST_FILE = "UTCMenuClock/UTCMenuClock-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.5;
+				PRODUCT_BUNDLE_IDENTIFIER = net.retina.UTCMenuClock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

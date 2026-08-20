@@ -49,20 +49,27 @@ cp "${RESOURCES_DIR}/welcome.html" "${DIST_WORK}/"
 cp "${RESOURCES_DIR}/conclusion.html" "${DIST_WORK}/"
 
 echo "==> Creating component package"
-pkgbuild \
+if ! pkgbuild \
     --component "${APP_PATH}" \
     --install-location /Applications \
     --identifier "${COMPONENT_ID}" \
     --version "${VERSION}" \
-    "${COMPONENT_PKG}"
+    "${COMPONENT_PKG}"; then
+    echo "error: pkgbuild failed — is CFBundleIdentifier set in the built app?" >&2
+    /usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "${APP_PATH}/Contents/Info.plist" >&2 || true
+    exit 1
+fi
 
 echo "==> Creating installer package"
-productbuild \
+if ! productbuild \
     --distribution "${RESOURCES_DIR}/Distribution.xml" \
     --resources "${DIST_WORK}" \
     --package-path "${OUTPUT_DIR}" \
     --version "${VERSION}" \
-    "${INSTALLER_PKG}"
+    "${INSTALLER_PKG}"; then
+    echo "error: productbuild failed" >&2
+    exit 1
+fi
 
 echo "==> Creating zip archive"
 ditto -c -k --sequesterRsrc --keepParent "${APP_PATH}" "${ZIP_PATH}"
