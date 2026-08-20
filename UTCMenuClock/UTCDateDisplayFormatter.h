@@ -1,11 +1,15 @@
-
-//  Created by John Adams on 11/14/11.
 //
-// Copyright 2011 John Adams
+//  UTCDateDisplayFormatter.h
+//  UTCMenuClock
+//
+//  Created by John Adams on 8/20/26.
+//
+// Copyright 2011-2026 John Adams <jna@retina.net>
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -15,10 +19,19 @@
 // limitations under the License.
 //
 
-//
-// Prefix header for all source files of the 'UTCMenuClock' target in the 'UTCMenuClock' project
-//
+#import <Foundation/Foundation.h>
 
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
+@class UTCMenuClockPreferences;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface UTCDateDisplayFormatter : NSObject
+
+- (void)updatePreferences:(UTCMenuClockPreferences *)preferences;
+- (NSString *)statusBarStringForDate:(NSDate *)date;
+- (NSString *)menuHeaderStringForDate:(NSDate *)date;
+- (NSString *)iso8601StringForDate:(NSDate *)date;
+
+@end
+
+NS_ASSUME_NONNULL_END

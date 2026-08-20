@@ -8,20 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		A88E0A712CC2E2B600BC0123 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88E0A702CC2E2B600BC0123 /* ServiceManagement.framework */; };
-		A88E0A722CC2E2B600BC0123 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88E0A702CC2E2B600BC0123 /* ServiceManagement.framework */; };
 		A8B1188B1471AE3A008A993B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B1188A1471AE3A008A993B /* Cocoa.framework */; };
 		A8B118951471AE3A008A993B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8B118931471AE3A008A993B /* InfoPlist.strings */; };
 		A8B118971471AE3A008A993B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B118961471AE3A008A993B /* main.m */; };
 		A8B1189B1471AE3A008A993B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A8B118991471AE3A008A993B /* Credits.rtf */; };
 		A8B1189E1471AE3A008A993B /* UTCMenuClockAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B1189D1471AE3A008A993B /* UTCMenuClockAppDelegate.m */; };
-		A8B118A11471AE3A008A993B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8B1189F1471AE3A008A993B /* MainMenu.xib */; };
-		A8B118A91471AE3A008A993B /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B118A81471AE3A008A993B /* SenTestingKit.framework */; };
+		A8B118A91471AE3A008A993B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B118A81471AE3A008A993B /* XCTest.framework */; };
 		A8B118AA1471AE3A008A993B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B1188A1471AE3A008A993B /* Cocoa.framework */; };
 		A8B118B21471AE3A008A993B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8B118B01471AE3A008A993B /* InfoPlist.strings */; };
-		A8B118B41471AE3A008A993B /* UTCMenuClockTests.h in Resources */ = {isa = PBXBuildFile; fileRef = A8B118B31471AE3A008A993B /* UTCMenuClockTests.h */; };
 		A8B118B61471AE3A008A993B /* UTCMenuClockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B118B51471AE3A008A993B /* UTCMenuClockTests.m */; };
 		A8B119261471EB13008A993B /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B119011471EB13008A993B /* LaunchAtLoginController.m */; };
-		A8B119271471EB13008A993B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A8B119021471EB13008A993B /* README.md */; };
+		B1C005012CC2E2B600BC0123 /* UTCDateDisplayFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C002012CC2E2B600BC0123 /* UTCDateDisplayFormatter.m */; };
+		B1C006012CC2E2B600BC0123 /* UTCMenuClockPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C004012CC2E2B600BC0123 /* UTCMenuClockPreferences.m */; };
 		DA1B0A0B1822FCFF00C57253 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA1B0A0A1822FCFF00C57253 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -45,12 +43,11 @@
 		A8B118921471AE3A008A993B /* UTCMenuClock-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UTCMenuClock-Info.plist"; sourceTree = "<group>"; };
 		A8B118941471AE3A008A993B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A8B118961471AE3A008A993B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A8B118981471AE3A008A993B /* UTCMenuClock-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UTCMenuClock-Prefix.pch"; sourceTree = "<group>"; };
 		A8B1189A1471AE3A008A993B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		A8B1189C1471AE3A008A993B /* UTCMenuClockAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UTCMenuClockAppDelegate.h; sourceTree = "<group>"; };
 		A8B1189D1471AE3A008A993B /* UTCMenuClockAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTCMenuClockAppDelegate.m; sourceTree = "<group>"; };
-		A8B118A71471AE3A008A993B /* UTCMenuClockTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UTCMenuClockTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8B118A81471AE3A008A993B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		A8B118A71471AE3A008A993B /* UTCMenuClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UTCMenuClockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8B118A81471AE3A008A993B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A8B118AF1471AE3A008A993B /* UTCMenuClockTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UTCMenuClockTests-Info.plist"; sourceTree = "<group>"; };
 		A8B118B11471AE3A008A993B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A8B118B31471AE3A008A993B /* UTCMenuClockTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UTCMenuClockTests.h; sourceTree = "<group>"; };
@@ -59,7 +56,10 @@
 		A8B119011471EB13008A993B /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		A8B119021471EB13008A993B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A8DCEE662EEB9390009EE388 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		A8DFE58328F0B2A40048B113 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		B1C001012CC2E2B600BC0123 /* UTCDateDisplayFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UTCDateDisplayFormatter.h; sourceTree = "<group>"; };
+		B1C002012CC2E2B600BC0123 /* UTCDateDisplayFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTCDateDisplayFormatter.m; sourceTree = "<group>"; };
+		B1C003012CC2E2B600BC0123 /* UTCMenuClockPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UTCMenuClockPreferences.h; sourceTree = "<group>"; };
+		B1C004012CC2E2B600BC0123 /* UTCMenuClockPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTCMenuClockPreferences.m; sourceTree = "<group>"; };
 		DA1B0A0A1822FCFF00C57253 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,8 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A88E0A722CC2E2B600BC0123 /* ServiceManagement.framework in Frameworks */,
-				A8B118A91471AE3A008A993B /* SenTestingKit.framework in Frameworks */,
+				A8B118A91471AE3A008A993B /* XCTest.framework in Frameworks */,
 				A8B118AA1471AE3A008A993B /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				A8B118861471AE3A008A993B /* UTCMenuClock.app */,
-				A8B118A71471AE3A008A993B /* UTCMenuClockTests.octest */,
+				A8B118A71471AE3A008A993B /* UTCMenuClockTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				A8B1188A1471AE3A008A993B /* Cocoa.framework */,
-				A8B118A81471AE3A008A993B /* SenTestingKit.framework */,
+				A8B118A81471AE3A008A993B /* XCTest.framework */,
 				A88E0A702CC2E2B600BC0123 /* ServiceManagement.framework */,
 				A8B1188C1471AE3A008A993B /* Other Frameworks */,
 			);
@@ -132,8 +131,11 @@
 			children = (
 				A8B1189C1471AE3A008A993B /* UTCMenuClockAppDelegate.h */,
 				A8B1189D1471AE3A008A993B /* UTCMenuClockAppDelegate.m */,
+				B1C001012CC2E2B600BC0123 /* UTCDateDisplayFormatter.h */,
+				B1C002012CC2E2B600BC0123 /* UTCDateDisplayFormatter.m */,
+				B1C003012CC2E2B600BC0123 /* UTCMenuClockPreferences.h */,
+				B1C004012CC2E2B600BC0123 /* UTCMenuClockPreferences.m */,
 				A8B118BF1471EB12008A993B /* LaunchAtLoginController */,
-				A8B1189F1471AE3A008A993B /* MainMenu.xib */,
 				DA1B0A0A1822FCFF00C57253 /* Images.xcassets */,
 				A8B118911471AE3A008A993B /* Supporting Files */,
 			);
@@ -146,7 +148,6 @@
 				A8B118921471AE3A008A993B /* UTCMenuClock-Info.plist */,
 				A8B118931471AE3A008A993B /* InfoPlist.strings */,
 				A8B118961471AE3A008A993B /* main.m */,
-				A8B118981471AE3A008A993B /* UTCMenuClock-Prefix.pch */,
 				A8B118991471AE3A008A993B /* Credits.rtf */,
 			);
 			name = "Supporting Files";
@@ -208,7 +209,6 @@
 				A8B118A21471AE3A008A993B /* Sources */,
 				A8B118A31471AE3A008A993B /* Frameworks */,
 				A8B118A41471AE3A008A993B /* Resources */,
-				A8B118A51471AE3A008A993B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -217,8 +217,8 @@
 			);
 			name = UTCMenuClockTests;
 			productName = UTCMenuClockTests;
-			productReference = A8B118A71471AE3A008A993B /* UTCMenuClockTests.octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
+			productReference = A8B118A71471AE3A008A993B /* UTCMenuClockTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -242,7 +242,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = A8B1187B1471AE3A008A993B;
 			productRefGroup = A8B118871471AE3A008A993B /* Products */;
@@ -262,9 +261,7 @@
 			files = (
 				A8B118951471AE3A008A993B /* InfoPlist.strings in Resources */,
 				A8B1189B1471AE3A008A993B /* Credits.rtf in Resources */,
-				A8B118A11471AE3A008A993B /* MainMenu.xib in Resources */,
 				DA1B0A0B1822FCFF00C57253 /* Images.xcassets in Resources */,
-				A8B119271471EB13008A993B /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,27 +270,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8B118B21471AE3A008A993B /* InfoPlist.strings in Resources */,
-				A8B118B41471AE3A008A993B /* UTCMenuClockTests.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		A8B118A51471AE3A008A993B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A8B118821471AE3A008A993B /* Sources */ = {
@@ -303,6 +283,8 @@
 				A8B118971471AE3A008A993B /* main.m in Sources */,
 				A8B1189E1471AE3A008A993B /* UTCMenuClockAppDelegate.m in Sources */,
 				A8B119261471EB13008A993B /* LaunchAtLoginController.m in Sources */,
+				B1C005012CC2E2B600BC0123 /* UTCDateDisplayFormatter.m in Sources */,
+				B1C006012CC2E2B600BC0123 /* UTCMenuClockPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,14 +321,6 @@
 				A8B1189A1471AE3A008A993B /* en */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		A8B1189F1471AE3A008A993B /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A8DFE58328F0B2A40048B113 /* Base */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		A8B118B01471AE3A008A993B /* InfoPlist.strings */ = {
@@ -463,16 +437,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9H4CZQM7ZP;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = "UTCMenuClock/UTCMenuClock-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = net.retina.UTCMenuClock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -484,17 +458,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9H4CZQM7ZP;
 				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
 				INFOPLIST_FILE = "UTCMenuClock/UTCMenuClock-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_BUNDLE_IDENTIFIER = net.retina.UTCMenuClock;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -505,17 +478,19 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UTCMenuClock.app/Contents/MacOS/UTCMenuClock";
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
+				ENABLE_HARDENED_RUNTIME = NO;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/UTCMenuClock";
 				INFOPLIST_FILE = "UTCMenuClockTests/UTCMenuClockTests-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.retina.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
@@ -524,17 +499,19 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UTCMenuClock.app/Contents/MacOS/UTCMenuClock";
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UTCMenuClock/UTCMenuClock-Prefix.pch";
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/UTCMenuClock";
 				INFOPLIST_FILE = "UTCMenuClockTests/UTCMenuClockTests-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.retina.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};

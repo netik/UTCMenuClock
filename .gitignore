@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Xcode user-specific data
+*.xcuserstate
+xcuserdata/
+*.xcbkptlist
+
+# Xcode build artifacts
+build/
+DerivedData/
+packaging/DerivedData/
+packaging/output/
+
+# Installer / distribution output
+*.pkg

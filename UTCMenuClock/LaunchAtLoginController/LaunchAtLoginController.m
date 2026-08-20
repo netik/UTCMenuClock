@@ -31,19 +31,24 @@
  @param itemURL The URL of the application bundle (unused in modern API).
  @param enabled A boolean indicating whether the application should launch at login.
  */
-- (void)setLaunchAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled {
+- (BOOL)setLaunchAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled {
     SMAppService *service = [SMAppService mainAppService];
     NSError *error = nil;
-    
+    BOOL success;
+
     if (enabled) {
-        if (![service registerAndReturnError:&error]) {
+        success = [service registerAndReturnError:&error];
+        if (!success) {
             NSLog(@"Failed to enable launch at login: %@", error.localizedDescription);
         }
     } else {
-        if (![service unregisterAndReturnError:&error]) {
+        success = [service unregisterAndReturnError:&error];
+        if (!success) {
             NSLog(@"Failed to disable launch at login: %@", error.localizedDescription);
         }
     }
+
+    return success;
 }
 
 /**
@@ -52,9 +57,14 @@
  @param enabled A boolean indicating whether the application should launch at login.
  */
 - (void)setLaunchAtLogin:(BOOL)enabled {
+    [self updateLaunchAtLoginEnabled:enabled];
+}
+
+- (BOOL)updateLaunchAtLoginEnabled:(BOOL)enabled {
     [self willChangeValueForKey:@"startAtLogin"];
-    [self setLaunchAtLogin:[self appURL] enabled:enabled];
+    BOOL success = [self setLaunchAtLogin:[self appURL] enabled:enabled];
     [self didChangeValueForKey:@"startAtLogin"];
+    return success;
 }
 
 @end

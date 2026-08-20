@@ -4,11 +4,12 @@
 //
 //  Created by John Adams on 11/14/11.
 //
-// Copyright 2011 John Adams
+// Copyright 2011-2026 John Adams <jna@retina.net>
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
@@ -20,21 +21,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class UTCDateDisplayFormatter;
+
 @interface UTCMenuClockAppDelegate : NSObject <NSApplicationDelegate>
 
-// Window outlet (weak - owned by nib)
-@property (weak) IBOutlet NSWindow *window;
-
-// Menu is created programmatically, so we need a strong reference
 @property (strong, nonatomic) NSMenu *mainMenu;
-
-// Status bar item (strong - we own it)
 @property (strong, nonatomic) NSStatusItem *statusItem;
-
-// Timer for clock updates
 @property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) UTCDateDisplayFormatter *dateFormatter;
 
-// Menu items that need state management
 @property (strong, nonatomic) NSMenuItem *dateMenuItem;
 @property (strong, nonatomic) NSMenuItem *show24Item;
 @property (strong, nonatomic) NSMenuItem *showDateItem;

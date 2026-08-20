@@ -20,8 +20,26 @@ reliable UTC reference next to the system clock.
 ## Build from source
 - Requirements: macOS 15+, Xcode 16 (project is updated for ARC).
 - Open `UTCMenuClock.xcodeproj`, select the `UTCMenuClock` scheme, then build & run.
-- The built app will appear in Xcode’s derived data under
-  `build/Release/UTCMenuClock.app` when using a Release build.
+- Code signing uses ad-hoc identity (`CODE_SIGN_IDENTITY = "-"`) so the project builds without an Apple Developer certificate. Debug builds disable hardened runtime so XCTest can load; Release builds keep hardened runtime enabled. To ship signed/notarized builds, set `CODE_SIGN_IDENTITY` to your Developer ID, restore `DEVELOPMENT_TEAM`, and archive from Xcode.
+- App version is controlled by `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in the Xcode target build settings.
+- The built app will appear in Xcode’s derived data when using a Release build.
+
+## Create installer or zip
+The legacy PackageMaker project has been replaced with Apple’s modern
+`pkgbuild` / `productbuild` tooling under `packaging/`.
+
+```bash
+./packaging/build-release.sh
+```
+
+This script:
+1. Builds a Release universal `UTCMenuClock.app`
+2. Writes `packaging/output/UTCMenuClock_<version>_installer.pkg`
+3. Writes `packaging/output/UTCMenuClock_v<version>_universal.zip`
+
+The `.pkg` installs the app into `/Applications` (system or user home,
+depending on where the installer is run). Sign and notarize the package
+before wide distribution if you use a Developer ID certificate.
 
 ## Using the app
 - Launching the app adds the UTC clock to the menu bar; click it to open the menu.

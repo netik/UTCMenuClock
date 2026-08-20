@@ -4,13 +4,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface LaunchAtLoginController : NSObject {
-
-}
+@interface LaunchAtLoginController : NSObject
 
 @property BOOL launchAtLogin;
 
 - (void)setLaunchAtLogin:(BOOL)enabled;
-- (void)setLaunchAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled;
+- (BOOL)updateLaunchAtLoginEnabled:(BOOL)enabled;
+- (BOOL)setLaunchAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled;
 
 @end
