@@ -1,0 +1,26 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build app, pkg, and zip
+        run: |
+          chmod +x packaging/build-release.sh
+          packaging/build-release.sh
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: UTCMenuClock-release
+          path: |
+            packaging/output/*.pkg
+            packaging/output/*.zip
