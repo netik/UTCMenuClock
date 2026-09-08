@@ -108,6 +108,20 @@ static NSString *const GITHUB_URL = @"https://github.com/netik/UTCMenuClock";
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:GITHUB_URL]];
 }
 
+- (NSDictionary<NSAttributedStringKey, id> *)statusBarTitleAttributes {
+    // Menu bar items use menuBarFont (14pt), not systemFontSize (13pt).
+    return @{
+        NSFontAttributeName: [NSFont menuBarFontOfSize:0],
+        NSForegroundColorAttributeName: NSColor.labelColor,
+    };
+}
+
+- (void)updateStatusBarTitle:(NSString *)title {
+    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title
+                                                                          attributes:[self statusBarTitleAttributes]];
+    self.statusItem.button.attributedTitle = attributedTitle;
+}
+
 - (void)updateDateMenuHeaderForDate:(NSDate *)date {
     self.dateMenuItem.title = [self.dateFormatter menuHeaderStringForDate:date];
 }
@@ -115,7 +129,7 @@ static NSString *const GITHUB_URL = @"https://github.com/netik/UTCMenuClock";
 - (void)doDateUpdate {
     NSDate *now = NSDate.date;
     [self updateDateMenuHeaderForDate:now];
-    self.statusItem.button.title = [self.dateFormatter statusBarStringForDate:now];
+    [self updateStatusBarTitle:[self.dateFormatter statusBarStringForDate:now]];
 }
 
 - (void)fireTimer:(NSTimer *)theTimer {
@@ -134,7 +148,6 @@ static NSString *const GITHUB_URL = @"https://github.com/netik/UTCMenuClock";
 
     NSStatusBar *bar = NSStatusBar.systemStatusBar;
     NSStatusItem *statusItem = [bar statusItemWithLength:NSVariableStatusItemLength];
-    statusItem.button.font = [NSFont monospacedDigitSystemFontOfSize:NSFont.systemFontSize weight:NSFontWeightRegular];
     self.statusItem = statusItem;
 
     NSMenuItem *mainItem = [[NSMenuItem alloc] init];

@@ -6,14 +6,14 @@ teams, distributed work, aviation, astronomy, or anyone who needs a
 reliable UTC reference next to the system clock.
 
 ## Features
-- UTC clock in the menu bar using monospaced digits for stable alignment.
+- UTC clock in the menu bar using the system menu bar font (`menuBarFontOfSize`, 14pt) to match the macOS clock.
 - Toggle 24-hour/12-hour display, seconds, date, Julian day, and timezone suffix.
 - ISO-8601 override for the menubar text plus “Copy as ISO-8601.”
 - Copy the current UTC timestamp (using your selected format) to the clipboard.
 - “Open at Login” toggle built into the menu.
 
 ## Download prebuilt binary
-- Grab the unsigned universal binary: [`downloads/UTCMenuClock_v1.5_universal.zip`](https://github.com/netik/UTCMenuClock/blob/master/downloads/UTCMenuClock_v1.5_universal.zip).
+- Grab the unsigned universal binary: [`downloads/UTCMenuClock_v1.6_universal.zip`](https://github.com/netik/UTCMenuClock/blob/master/downloads/UTCMenuClock_v1.6_universal.zip).
 - Because the app is unsigned, macOS will warn on first launch. Use
   `Right Click > Open` to allow it, or permit it under System Settings → Privacy & Security.
 
