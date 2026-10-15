@@ -6,7 +6,7 @@ teams, distributed work, aviation, astronomy, or anyone who needs a
 reliable UTC reference next to the system clock.
 
 ## Features
-- UTC clock in the menu bar using the system menu bar font (`menuBarFontOfSize`, 14pt) to match the macOS clock.
+- UTC clock in the menu bar using the system menu bar font (`menuBarFontOfSize`, 14pt) with monospaced digits, matching the macOS clock.
 - Toggle 24-hour/12-hour display, seconds, date, Julian day, and timezone suffix.
 - ISO-8601 override for the menubar text plus “Copy as ISO-8601.”
 - Copy the current UTC timestamp (using your selected format) to the clipboard.

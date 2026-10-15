@@ -110,8 +110,10 @@ static NSString *const GITHUB_URL = @"https://github.com/netik/UTCMenuClock";
 
 - (NSDictionary<NSAttributedStringKey, id> *)statusBarTitleAttributes {
     // Menu bar items use menuBarFont (14pt), not systemFontSize (13pt).
+    // Use monospaced digits so the title doesn't jitter as the seconds tick.
+    CGFloat size = [NSFont menuBarFontOfSize:0].pointSize;
     return @{
-        NSFontAttributeName: [NSFont menuBarFontOfSize:0],
+        NSFontAttributeName: [NSFont monospacedDigitSystemFontOfSize:size weight:NSFontWeightRegular],
         NSForegroundColorAttributeName: NSColor.labelColor,
     };
 }
