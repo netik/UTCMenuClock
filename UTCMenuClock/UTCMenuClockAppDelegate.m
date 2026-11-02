@@ -108,18 +108,11 @@ static NSString *const GITHUB_URL = @"https://github.com/netik/UTCMenuClock";
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:GITHUB_URL]];
 }
 
-- (NSDictionary<NSAttributedStringKey, id> *)statusBarTitleAttributes {
-    // Menu bar items use menuBarFont (14pt), not systemFontSize (13pt).
-    return @{
-        NSFontAttributeName: [NSFont menuBarFontOfSize:0],
-        NSForegroundColorAttributeName: NSColor.labelColor,
-    };
-}
-
 - (void)updateStatusBarTitle:(NSString *)title {
-    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title
-                                                                          attributes:[self statusBarTitleAttributes]];
-    self.statusItem.button.attributedTitle = attributedTitle;
+    // Use the plain title so NSStatusBarButton can apply the menu bar's
+    // inactive/dim tint. An explicit attributed color, including
+    // labelColor, stays full brightness when the display dims.
+    self.statusItem.button.title = title;
 }
 
 - (void)updateDateMenuHeaderForDate:(NSDate *)date {
@@ -148,6 +141,8 @@ static NSString *const GITHUB_URL = @"https://github.com/netik/UTCMenuClock";
 
     NSStatusBar *bar = NSStatusBar.systemStatusBar;
     NSStatusItem *statusItem = [bar statusItemWithLength:NSVariableStatusItemLength];
+    // Menu bar items use menuBarFont (14pt), not systemFontSize (13pt).
+    statusItem.button.font = [NSFont menuBarFontOfSize:0];
     self.statusItem = statusItem;
 
     NSMenuItem *mainItem = [[NSMenuItem alloc] init];
